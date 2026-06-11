@@ -365,14 +365,4 @@ defineExpose({
     padding: 10px;
   }
 }
-
-.baseTable {
-  :deep(.table-striped-row > td) {
-    background: #fafafa;
-  }
-
-  :deep(.ant-table-wrapper) {
-    width: 100%;
-  }
-}
 </style>

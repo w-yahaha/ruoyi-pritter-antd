@@ -263,7 +263,7 @@ init()
     >
       <template #handleLeft>
         <a-button
-          class="ml12 order16"
+          class="order16"
           v-hasPermi="['system:user:import']"
           @click="handleImport"
         >
@@ -274,6 +274,7 @@ init()
           class="order17"
           v-hasPermi="['system:user:export']"
           @click="handleExport"
+          type="dashed"
         >
           <SvgIcon size="14" iconClass="download" />
           <span class="ml6">导出</span>
@@ -301,7 +302,6 @@ init()
         <a-button
           class="ml12 order11"
           size="small"
-          type="primary"
           @click="handleResetPwd(backData)"
           v-hasPermi="['system:user:resetPwd']"
           v-if="backData.userId !== 1"
