@@ -31,7 +31,7 @@ const columnChecked = defineModel('columnChecked', { type: Array })
 const emit = defineEmits([
   'refresh',
   'add',
-  'edit-more',
+  'edit',
   'delete',
   'toggle-search',
   'change-column',
@@ -40,6 +40,7 @@ const emit = defineEmits([
 ])
 
 const hasSelection = computed(() => props.tableSelected.length > 0)
+const canEditSelected = computed(() => props.tableSelected.length === 1)
 
 const showLeft = computed(
   () => props.hasLeftSlot || props.headerButtons.length > 0
@@ -81,8 +82,8 @@ const includes = (name) => props.headerButtons.includes(name)
             v-if="includes('edit') && hasPermi(permission.edit)"
             type="primary"
             class="order10"
-            :disabled="!hasSelection"
-            @click="emit('edit-more')"
+            :disabled="!canEditSelected"
+            @click="emit('edit')"
           >
             <SvgIcon :size="14" icon-class="pencil" />
             <span class="ml6">编辑</span>

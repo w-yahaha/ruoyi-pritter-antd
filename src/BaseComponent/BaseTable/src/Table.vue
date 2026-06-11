@@ -100,7 +100,7 @@ import {
 const props = defineProps({
   border: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   dataList: {
     type: Array,

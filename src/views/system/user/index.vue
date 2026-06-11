@@ -1,5 +1,4 @@
 <script setup name="User">
-import { nextTick } from 'vue'
 import ImportDialog from '@/components/ImportDialog'
 import getSearchConfig from './config/searchConfig'
 import getContentConfig from './config/contentConfig.js'
@@ -82,28 +81,12 @@ const addCallBack = () => {
   getPostAndRole()
   dialogHideItems.value.length = 0
 }
-const editCallBack = (item, type, res) => {
+const editCallBack = (_item, res) => {
   infoInit.value.roleIds = res.roleIds
   roleOptions.value = res.roles
   infoInit.value.postIds = res.postIds
   postOptions.value = res.posts
   dialogHideItems.value = ['password', 'userName']
-  isEditMore.value = type
-}
-const isEditMore = ref(false)
-const editMoreClick = () => {
-  if (tableSelected.value.length > 0) {
-    const data = tableSelected.value[0]
-    pageContentRef.value?.editClick(data, true)
-    nextTick(() => {
-      const newArray = tableSelected.value.slice(1)
-      dialogRef.value?.changeSelected(newArray)
-    })
-  }
-}
-
-const editNext = (data) => {
-  pageContentRef.value?.editClick(data, true)
 }
 
 const [dialogRef, infoInit, addClick, editBtnClick] = useDialog(
@@ -259,7 +242,6 @@ init()
       @addClick="addClick"
       @editBtnClick="editBtnClick"
       @onChangeShowColumn="onChangeShowColumn"
-      @editMoreClick="editMoreClick"
     >
       <template #handleLeft>
         <a-button
@@ -318,9 +300,7 @@ init()
       :dialogConfig="dialogConfigComputed"
       :infoInit="infoInit"
       :search="search"
-      :isEditMore="isEditMore"
       :requestBaseUrl="requestBaseUrl"
-      @editNext="editNext"
     >
     </PageDialog>
     <ImportDialog

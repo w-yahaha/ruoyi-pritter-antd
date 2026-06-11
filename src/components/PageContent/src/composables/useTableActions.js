@@ -4,7 +4,11 @@ import to from '@/utils/to'
 import modal from '@/plugins/modal'
 import { resolveRowId, resolveRowIds } from '../utils/resolveRowId'
 
-export function useTableActions(props, emit, { isLoading, send, finalSearchData }) {
+export function useTableActions(
+  props,
+  emit,
+  { isLoading, send, finalSearchData }
+) {
   const store = businessStore()
 
   const deleteRow = async (delData) => {
@@ -32,7 +36,7 @@ export function useTableActions(props, emit, { isLoading, send, finalSearchData 
     isLoading.value = false
   }
 
-  const editClick = async (item, type) => {
+  const editClick = async (item) => {
     isLoading.value = true
     const id = resolveRowId(item, props)
 
@@ -40,7 +44,7 @@ export function useTableActions(props, emit, { isLoading, send, finalSearchData 
       const url = `${props.requestBaseUrl}${interceptor(props.pageName)}/${id}`
       const [res] = await to(getInfo(url))
       if (res?.data) {
-        emit('editBtnClick', res.data, type, res)
+        emit('editBtnClick', res.data, res)
       }
     } else {
       modal.notifyWarning('未获取到有效Id')
@@ -50,7 +54,11 @@ export function useTableActions(props, emit, { isLoading, send, finalSearchData 
   }
 
   const addClick = () => emit('addClick')
-  const editMoreClick = () => emit('editMoreClick')
 
-  return { deleteRow, editClick, addClick, editMoreClick }
+  const editSelected = () => {
+    if (props.tableSelected.length !== 1) return
+    editClick(props.tableSelected[0])
+  }
+
+  return { deleteRow, editClick, editSelected, addClick }
 }

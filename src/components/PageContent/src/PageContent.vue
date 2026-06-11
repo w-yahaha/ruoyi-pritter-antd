@@ -84,7 +84,6 @@ const props = defineProps({
     default: () => [
       'refresh',
       'add',
-      'edit',
       'delete',
       'columnDisplay',
       'comSearch',
@@ -130,7 +129,6 @@ const emit = defineEmits([
   'beforeSend',
   'afterSend',
   'onChangeShowColumn',
-  'editMoreClick',
 ])
 
 const slots = useSlots()
@@ -153,7 +151,7 @@ const {
   triggerShowSearch,
 } = usePageData(props, emit)
 
-const { deleteRow, editClick, addClick, editMoreClick } = useTableActions(
+const { deleteRow, editClick, editSelected, addClick } = useTableActions(
   props,
   emit,
   { isLoading, send, finalSearchData }
@@ -237,7 +235,7 @@ defineExpose({
             :column-display-key="columnDisplayKey"
             @refresh="refresh"
             @add="addClick"
-            @edit-more="editMoreClick"
+            @edit="editSelected"
             @delete="deleteRow"
             @toggle-search="triggerShowSearch"
             @change-column="onChangeShowColumn"

@@ -41,10 +41,6 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  isEditMore: {
-    type: Boolean,
-    default: false,
-  },
   maxHeight: {
     type: [String, Number],
     default: '',
@@ -63,7 +59,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['closed', 'editNext', 'beforeSave'])
+const emit = defineEmits(['closed', 'beforeSave'])
 const slots = useSlots()
 const dialogVisible = ref(false)
 const formData = ref({})
@@ -71,7 +67,6 @@ const title = ref('')
 const formRef = useTemplateRef('formRef')
 const store = businessStore()
 const loading = ref(false)
-const tableSelected = ref([])
 
 const dialogClass = computed(() => {
   const totalPageName = props.pageName.replaceAll('/', '\\/')
@@ -148,12 +143,7 @@ const commitClick = async () => {
   const [res] = await to(send())
   if (res) {
     props.search && props.search()
-    if (props.isEditMore && tableSelected.value.length > 0) {
-      const current = tableSelected.value.shift()
-      emit('editNext', current)
-    } else {
-      dialogVisible.value = false
-    }
+    dialogVisible.value = false
   }
   loading.value = false
 }
@@ -188,10 +178,6 @@ const setFormData = (key, value) => {
   formData.value[key] = value
 }
 
-const changeSelected = (newValue) => {
-  tableSelected.value = newValue
-}
-
 const isSmall = window.isSmallScreen
 const dialogMaxHeight = ref()
 
@@ -221,7 +207,6 @@ defineExpose({
   title,
   formData,
   setFormData,
-  changeSelected,
   formRef,
 })
 </script>
@@ -267,10 +252,7 @@ defineExpose({
             取消
           </a-button>
           <a-button type="primary" :loading="loading" @click="commitClick">
-            <span v-if="tableSelected.length > 0 && isEditMore">
-              保存并编辑下一项
-            </span>
-            <span v-else>保存</span>
+            保存
           </a-button>
         </div>
       </template>
