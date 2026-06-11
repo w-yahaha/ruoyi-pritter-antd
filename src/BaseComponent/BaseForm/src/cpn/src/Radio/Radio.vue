@@ -27,7 +27,6 @@ defineExpose({ getRef })
       v-for="option in getOptions(item)"
       :key="option.key ?? option.value"
       :value="option.value"
-      v-bind="item.optionConfig ?? {}"
     >
       {{ option.label }}
     </a-radio>

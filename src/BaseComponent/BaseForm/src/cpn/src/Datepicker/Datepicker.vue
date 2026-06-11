@@ -6,16 +6,7 @@ const props = defineProps({
 const value = defineModel('value')
 const dateRef = useTemplateRef('dateRef')
 
-const isRange = computed(() => {
-  const type = props.item.type?.toLowerCase()
-  return (
-    props.item.isRange ||
-    props.item.config?.range ||
-    type === 'daterange' ||
-    (props.item.config?.picker &&
-      String(props.item.config.picker).includes('range'))
-  )
-})
+const isRange = computed(() => props.item.config?.range === true)
 
 const dateConfig = computed(() => ({
   placeholder: isRange.value ? undefined : '请选择' + props.item.label,

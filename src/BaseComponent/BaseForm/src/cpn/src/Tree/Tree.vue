@@ -8,8 +8,8 @@ const props = defineProps({
 const treeRef = useTemplateRef('treeRef')
 
 const treeConfig = computed(() => ({
-  fieldNames: props.item.config?.fieldNames ?? defaultTreeFieldNames,
   style: { width: '100%' },
+  fieldNames: props.item.config?.fieldNames ?? defaultTreeFieldNames,
   ...props.item.config,
   treeData: props.item.config?.treeData ?? getOptions(props.item),
 }))

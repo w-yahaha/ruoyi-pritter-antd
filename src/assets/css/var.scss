@@ -1,52 +1,33 @@
+@use 'sass:map';
+@use 'mixins' as *;
+
+// 后台主体窗口左右间距
+$main-space: 16px;
+$primary-light: #3f6ad8;
+
+// --ba-background
+$bg-color: () !default;
+$bg-color: map.merge(
+  (
+    '': #f5f5f5,
+    'overlay': #ffffff,
+  ),
+  $bg-color
+);
+
+// --ba-border-color
+// eaeef1
+$border-color: () !default;
+$border-color: map.merge(
+  (
+    '': #f6f6f6,
+  ),
+  $border-color
+);
+
 :root {
-  --body-background: #f5f7fa;
-  --text-color: #141414;
-  /* Element Plus 风格滚动条 */
-  --scrollbar-size: 6px;
-  --scrollbar-thumb-color: rgba(144, 147, 153, 0.3);
-  --scrollbar-thumb-hover-color: rgba(144, 147, 153, 0.5);
-  --scrollbar-track-color: transparent;
-}
-
-.dark {
-  --body-background: #141414;
-  --text-color: #fff;
-  --scrollbar-thumb-color: rgba(163, 166, 173, 0.3);
-  --scrollbar-thumb-hover-color: rgba(163, 166, 173, 0.5);
-}
-
-/* 全局滚动条美化（Element Plus el-scrollbar 风格） */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
-}
-
-*::-webkit-scrollbar {
-  width: var(--scrollbar-size);
-  height: var(--scrollbar-size);
-}
-
-*::-webkit-scrollbar-track {
-  background-color: var(--scrollbar-track-color);
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-color);
-  border-radius: 4px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-  transition: background-color 0.2s ease;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover-color);
-}
-
-*::-webkit-scrollbar-corner {
-  background-color: var(--scrollbar-track-color);
-}
-
-html.theme-switching,
-html.theme-switching * {
-  transition: none !important;
+  @include set-css-var-value('main-space', $main-space);
+  @include set-css-var-value('color-primary-light', $primary-light);
+  @include set-component-css-var('bg-color', $bg-color);
+  @include set-component-css-var('border-color', $border-color);
 }

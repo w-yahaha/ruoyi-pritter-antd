@@ -443,9 +443,8 @@ export function getElementTotalSize(element) {
 export const getDialogMaxHeight = (elementClass) => {
   const element = document.querySelector(elementClass)
   if (!element) return 0
-  // 查找 element下面的el-dialog__header和el-dialog__footer
-  const header = element.querySelector('.el-dialog__header')
-  const footer = element.querySelector('.el-dialog__footer')
+  const header = element.querySelector('.ant-modal-header')
+  const footer = element.querySelector('.ant-modal-footer')
 
   const { marginTop, marginBottom } = getElementTotalSize(element)
   const isSmall = window.isSmallScreen

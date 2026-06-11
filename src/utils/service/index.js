@@ -97,11 +97,13 @@ const LmwRequest = new LmwAxios({
       return error
     },
     //  响应拦截
-    responseInterceptor: (res, info) => {
+    responseInterceptor: (res) => {
+      console.log('responseInterceptor', res)
       // 未设置状态码则默认成功状态
       const code = res.data.code || 200
       // 获取错误信息
       const msg = errorCode[code] || res.data.msg || errorCode['default']
+      console.log({ msg, code })
       // 二进制数据则直接返回
       if (
         res.request.responseType === 'blob' ||
@@ -144,10 +146,11 @@ const LmwRequest = new LmwAxios({
         }
         return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
       } else if (code === 500) {
+        console.log({ msg })
         modal.msgError(msg ?? '后端 500 报错')
         return Promise.reject(`msg:${msg},code:${code}`)
       } else if (code === 601) {
-        modal.msgWarning({ message: msg ?? '后端 601 报错', duration: 4 })
+        modal.msgWarning(msg ?? '后端 601 报错')
         return Promise.reject(new Error(msg))
       } else if (code !== 200) {
         modal.msgError(msg)
@@ -167,7 +170,7 @@ const LmwRequest = new LmwAxios({
           message = '系统接口' + message.substr(message.length - 3) + '异常'
         }
         if (error.response?.status !== 304) {
-          modal.msgError({ message: message ?? '304', duration: 4 })
+          modal.msgError(message ?? '304')
         }
       }
       return Promise.reject(error)
@@ -194,26 +197,24 @@ export function download(url, data, filename, config) {
     responseType: 'blob',
     ...config,
   })
-    .then(async (data) => {
-      const isLogin = await blobValidate(data)
+    .then(async (resData) => {
+      const isLogin = await blobValidate(resData)
       if (isLogin) {
-        const blob = new Blob([data])
+        const blob = new Blob([resData])
         saveAs(blob, filename)
       } else {
-        const resText = await data.text()
+        const resText = await resData.text()
         const rspObj = JSON.parse(resText)
         const errMsg =
           errorCode[rspObj.code] || rspObj.msg || errorCode['default']
-        modal.msgError({ message: errMsg, duration: 4 })
+        modal.msgError(errMsg)
       }
-      modal.closeLoading()
     })
     .catch((r) => {
       console.error(r)
-      modal.msgError({
-        message: '下载文件出现错误，请联系管理员！',
-        duration: 4,
-      })
+      modal.msgError('下载文件出现错误，请联系管理员！')
+    })
+    .finally(() => {
       modal.closeLoading()
     })
 }

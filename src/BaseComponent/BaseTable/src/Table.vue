@@ -18,6 +18,7 @@
     <a-table
       ref="tableRef"
       class="antTable"
+      :columns="tableColumns"
       :data-source="dataList"
       :bordered="border"
       :pagination="false"
@@ -25,46 +26,42 @@
       :scroll="scrollConfig"
       :row-class-name="rowClassName"
       v-bind="mergedTableConfig"
-      v-on="tableListener"
       @change="onTableChange"
     >
-      <template v-if="showExpand" #expandedRowRender="{ record }">
-        <slot name="expand" :backData="record" />
+      <template #headerCell="{ column }">
+        <slot
+          v-if="column.slotName"
+          :name="`${column.slotName}Header`"
+          :backData="{ column: column.columnItem || column }"
+        >
+          {{ column.title }}
+        </slot>
+        <template v-else>
+          {{ column.title }}
+        </template>
       </template>
 
-      <a-table-column
-        v-if="showIndex"
-        key="__index"
-        title="序号"
-        :width="55"
-        :align="align"
-      >
-        <template #default="{ index }">
+      <template #bodyCell="{ column, record, index }">
+        <template v-if="column.key === '__index'">
           {{
             (paginationInfo.pageNum - 1) * paginationInfo.pageSize + index + 1
           }}
         </template>
-      </a-table-column>
+        <slot
+          v-else-if="column.slotName"
+          :name="column.slotName"
+          :backData="record"
+          :currentItem="column.columnItem || column"
+        >
+          {{ record[column.dataIndex] }}
+        </slot>
+        <template v-else>
+          {{ record[column.dataIndex] }}
+        </template>
+      </template>
 
-      <template v-for="item in tableItem" :key="item.prop">
-        <TableColumn :item="item" :align="align" :hide-items="hideItems">
-          <template
-            v-for="(_value, slotName) in slots"
-            #[slotName]="{ backData, currentItem }"
-          >
-            <slot
-              :name="slotName"
-              :backData="backData"
-              :currentItem="currentItem"
-            />
-          </template>
-          <template v-for="slotName in item.slotNames" #[slotName]="slotData">
-            <slot
-              :name="`${item.prop}` + capitalizeFirstLetter(slotName)"
-              :backData="slotData"
-            />
-          </template>
-        </TableColumn>
+      <template v-if="showExpand" #expandedRowRender="{ record }">
+        <slot name="expand" :backData="record" />
       </template>
     </a-table>
 
@@ -93,10 +90,10 @@
 </template>
 
 <script setup>
-import TableColumn from './TableColumn.vue'
 import {
-  capitalizeFirstLetter,
+  buildTableColumns,
   collectExpandableKeys,
+  getTableScrollX,
   hasSlot,
 } from './utils/index.js'
 
@@ -157,7 +154,7 @@ const props = defineProps({
     type: [Array, Object],
     default: () => [],
   },
-  maxHeight: {
+  maxTableHeight: {
     type: Number,
   },
   selectionConfig: {
@@ -167,7 +164,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:paginationInfo', 'sortChange'])
-const slots = useSlots()
 const headerRef = useTemplateRef('headerRef')
 const tableRef = useTemplateRef('tableRef')
 const footerRef = useTemplateRef('footerRef')
@@ -176,28 +172,50 @@ const isSmall = window.isSmallScreen
 
 let expandAll = false
 
+const tableColumns = computed(() =>
+  buildTableColumns(
+    props.tableItem,
+    props.hideItems,
+    props.align,
+    props.showIndex
+  )
+)
+
 const rowKey = computed(() => props.tableConfig.rowKey || 'id')
 
 const mergedTableConfig = computed(() => {
   const { rowClassName, expandable, scroll, ...rest } = props.tableConfig
-  return {
+
+  const config = {
     rowKey: rowKey.value,
     ...rest,
-    expandable: {
+  }
+
+  if (props.showExpand) {
+    config.expandable = {
       ...(expandable || {}),
       expandedRowKeys: expandedRowKeys.value,
       onExpandedRowsChange: (keys) => {
         expandedRowKeys.value = keys
         expandable?.onExpandedRowsChange?.(keys)
       },
-    },
+    }
   }
+
+  return config
 })
 
 const rowSelection = computed(() => {
   if (!props.showChoose) return undefined
+
+  const { onChange, ...rest } = props.selectionConfig
+
   return {
-    ...props.selectionConfig,
+    ...rest,
+    onChange: (selectedRowKeys, selectedRows) => {
+      props.tableListener.selectionChange?.(selectedRows)
+      onChange?.(selectedRowKeys, selectedRows)
+    },
   }
 })
 
@@ -210,17 +228,20 @@ const maxHeightComputed = computed(() => {
   if (headerRef.value) {
     headerHeight = headerRef.value.clientHeight
   }
-  if (props.maxHeight) {
-    return props.maxHeight - headerHeight - footerHeight
+  if (props.maxTableHeight) {
+    return props.maxTableHeight - headerHeight - footerHeight
   }
   return window.innerHeight - 260 - headerHeight - footerHeight
 })
 
 const scrollConfig = computed(() => {
   const y = maxHeightComputed.value > 300 ? maxHeightComputed.value : 300
+  const { scroll = {} } = props.tableConfig
+  const x = scroll.x ?? getTableScrollX(props.tableItem, props.showIndex)
   return {
+    ...scroll,
     y,
-    ...(props.tableConfig.scroll || {}),
+    ...(x ? { x } : {}),
   }
 })
 
@@ -286,6 +307,7 @@ const onTableChange = (_pagination, _filters, sorter) => {
   if (sorter && (sorter.order || Array.isArray(sorter))) {
     emit('sortChange', sorter)
   }
+  props.tableListener.change?.(_pagination, _filters, sorter)
 }
 
 const unFoldAll = (...arg) => {
