@@ -28,7 +28,7 @@ export const tableItem = [
   {
     prop: 'todo',
     label: '操作',
-    minWidth: 260,
+    width: 270,
     fixed: !window.isSmallScreen ? 'right' : undefined,
     slotName: 'todo',
     ellipsis: false,

@@ -247,19 +247,15 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 240px;
-  height: 36px;
+  width: 160px;
+  height: 28px;
   padding: 0 12px;
   border: none;
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  background: var(--ba-bg-color);
   cursor: pointer;
   transition: all 0.2s;
-
-  &:hover {
-    background: #fff;
-    box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.15);
-  }
+  color: #c2c2c2;
 }
 
 .nav-search-icon {
@@ -277,9 +273,8 @@ onUnmounted(() => {
   align-items: center;
   padding: 2px 6px;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--ba-bg-color);
   font-size: 11px;
-  color: rgba(0, 0, 0, 0.45);
   font-family: inherit;
 }
 
@@ -340,23 +335,11 @@ onUnmounted(() => {
 .global-search-empty {
   padding: 24px 0;
 }
-
 .dark {
   .nav-search {
-    background: rgba(255, 255, 255, 0.08);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.25);
-    }
-  }
-
-  .nav-search-kbd {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.45);
+    color: #525252;
   }
 }
-
 @media (max-width: 768px) {
   .nav-search {
     display: none;

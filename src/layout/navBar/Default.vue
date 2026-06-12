@@ -95,14 +95,13 @@ const onMenuCollapse = () => {
   border-radius: 8px;
   background: transparent;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--ba-text-color);
   font-size: 16px;
   transition: all 0.2s;
   flex-shrink: 0;
 
   &:hover {
     background: rgba(0, 0, 0, 0.04);
-    color: rgba(0, 0, 0, 0.88);
   }
 }
 
@@ -114,11 +113,8 @@ const onMenuCollapse = () => {
 }
 
 .dark .nav-icon-btn {
-  color: rgba(255, 255, 255, 0.45);
-
   &:hover {
     background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.88);
   }
 }
 </style>

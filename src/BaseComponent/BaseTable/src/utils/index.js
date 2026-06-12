@@ -103,7 +103,7 @@ export const buildTableColumns = (tableItem, hideItems, align, showIndex) => {
     columns.push({
       title: '序号',
       key: '__index',
-      width: 55,
+      width: 60,
       align,
     })
   }

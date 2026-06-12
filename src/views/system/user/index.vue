@@ -93,7 +93,7 @@ const [dialogRef, infoInit, addClick, editBtnClick] = useDialog(
   '添加'
 )
 
-const dialogWidth = ref('600px')
+const dialogWidth = ref('650px')
 const searchData = computed(() => {
   return pageContentRef.value?.finalSearchData
 })

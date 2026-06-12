@@ -39,7 +39,11 @@ const onMenuCollapse = () => {
       @click="onMenuCollapse"
     >
       <SvgIcon
-        :icon-class="config.layout.menuCollapse ? 'indent' : 'dedent'"
+        :iconClass="
+          config.layout.menuCollapse
+            ? 'ant-icon-MenuUnfoldOutlined'
+            : 'ant-icon-MenuFoldOutlined'
+        "
         :size="16"
       />
     </button>

@@ -28,8 +28,8 @@ $border-color: map.merge(
 $a: () !default;
 $a: map.merge(
   (
-    'table-active': '#f6f8fa',
-    'checkbox-check': '#000000',
+    'checkbox-icon': '#ffffff',
+    'button-text-hover': '#000000',
   ),
   $a
 );

@@ -50,7 +50,7 @@ const onProfile = () => {
     <a-tooltip title="主题切换">
       <button type="button" class="nav-menu-item" @click="toggleDarkLight">
         <SvgIcon
-          :icon-class="configStore.layout.isDark ? 'light' : 'dark'"
+          :iconClass="configStore.layout.isDark ? 'icon-light' : 'icon-dark'"
           :size="16"
         />
       </button>
@@ -118,14 +118,13 @@ const onProfile = () => {
   border-radius: 8px;
   background: transparent;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--ba-text-color);
   font-size: 16px;
   transition: all 0.2s;
 
   &:hover,
   &.active {
     background: rgba(0, 0, 0, 0.04);
-    color: rgba(0, 0, 0, 0.88);
   }
 }
 
@@ -141,7 +140,7 @@ const onProfile = () => {
   background: transparent;
   cursor: pointer;
   transition: all 0.2s;
-
+  color: var(--ba-text-color);
   &:hover {
     background: rgba(0, 0, 0, 0.04);
   }
@@ -149,7 +148,7 @@ const onProfile = () => {
 
 .nav-menu-user-name {
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--ba-text-color);
   max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -158,21 +157,13 @@ const onProfile = () => {
 
 .dark {
   .nav-menu-item {
-    color: rgba(255, 255, 255, 0.45);
-
     &:hover,
     &.active {
       background: rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.88);
     }
   }
-
   .nav-menu-user:hover {
     background: rgba(255, 255, 255, 0.08);
-  }
-
-  .nav-menu-user-name {
-    color: rgba(255, 255, 255, 0.65);
   }
 }
 </style>

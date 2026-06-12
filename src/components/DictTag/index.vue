@@ -2,7 +2,7 @@
   <div>
     <template v-for="(item, index) in options">
       <template v-if="values.includes(item.value)">
-        <span
+        <!-- <span
           v-if="
             (item.elTagType == 'default' || item.elTagType == '') &&
             (item.elTagClass == '' || item.elTagClass == null)
@@ -18,9 +18,22 @@
           :key="item.value + ''"
           :index="index"
           :color="getColor(item.elTagType)"
+          :bordered="false"
           :class="item.elTagClass"
           >{{ item.label + ' ' }}
-        </a-tag>
+        </a-tag> -->
+
+        <span
+          class="dictTag"
+          :key="item.value"
+          :index="index"
+          :class="item.elTagType"
+        >
+          <SvgIcon iconClass="circle" size="8"></SvgIcon>
+          <span class="ml5">
+            {{ item.label + ' ' }}
+          </span>
+        </span>
       </template>
     </template>
     <template v-if="unmatch && showValue">
@@ -93,8 +106,27 @@ function getColor(type) {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .a-tag + .a-tag {
   margin-left: 10px;
+}
+.dictTag {
+  display: flex;
+  align-items: center;
+}
+.primary {
+  color: #1677ff;
+}
+.success {
+  color: #4aa785;
+}
+.info {
+  color: #8a8cd9;
+}
+.warning {
+  color: #ffc555;
+}
+.danger {
+  color: #e94d41;
 }
 </style>

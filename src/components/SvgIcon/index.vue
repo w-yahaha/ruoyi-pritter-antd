@@ -30,22 +30,24 @@ export default defineComponent({
       color: props.color || undefined,
     }))
 
-    if (props.iconClass.indexOf(ANT_ICON_PREFIX) === 0) {
-      const iconName = props.iconClass.slice(ANT_ICON_PREFIX.length)
-      return () =>
-        createVNode(resolveComponent(iconName), {
+    return () => {
+      if (props.iconClass.startsWith(ANT_ICON_PREFIX)) {
+        const iconName = props.iconClass.slice(ANT_ICON_PREFIX.length)
+        return createVNode(resolveComponent(iconName), {
+          key: props.iconClass,
           class: ['ant-icon', props.className].filter(Boolean).join(' '),
           style: iconStyle.value,
         })
-    }
+      }
 
-    return () =>
-      createVNode(svg, {
+      return createVNode(svg, {
+        key: props.iconClass,
         iconClass: props.iconClass,
         size: props.size,
         color: props.color,
         className: props.className,
       })
+    }
   },
 })
 </script>
