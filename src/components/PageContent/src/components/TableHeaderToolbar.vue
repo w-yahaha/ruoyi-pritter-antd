@@ -170,14 +170,14 @@ const includes = (name) => props.headerButtons.includes(name)
 .table-search-button-group {
   display: flex;
   margin-left: 12px;
-  border: 1px solid var(--ba-border-color, #d9d9d9);
+  border: 1px solid var(--ba-border-color);
   border-radius: 6px;
   overflow: hidden;
 
   button:focus,
   button:active {
     color: #000;
-    background-color: var(--ba-bg-color-overlay, #fff);
+    background-color: var(--ba-bg-color);
   }
 
   button:hover {
@@ -208,6 +208,6 @@ const includes = (name) => props.headerButtons.includes(name)
 .flex {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 </style>

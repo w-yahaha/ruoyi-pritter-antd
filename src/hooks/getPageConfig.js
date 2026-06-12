@@ -10,7 +10,7 @@ export default (config, dictsMap) => {
       if (isRef(fromItem.options)) {
         fromItem.options.value = dict.value || dict || []
       } else {
-        fromItem.options = dict.value || dict || []
+        fromItem.options = ref(dict.value)
       }
     }
   }

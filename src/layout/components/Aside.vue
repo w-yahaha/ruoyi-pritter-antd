@@ -49,8 +49,8 @@ const siderCollapsedWidth = computed(() => config.menuWidth())
 .layout-aside {
   display: flex;
   flex-direction: column;
-  background: var(--layout-menu-bg, #fff);
-  border-right: 1px solid var(--layout-menu-border, rgba(0, 0, 0, 0.06));
+  background: var(--layout-menu-bg);
+  border-right: 1px solid var(--ba-border-color);
   height: 100vh;
   overflow: hidden;
   user-select: none;

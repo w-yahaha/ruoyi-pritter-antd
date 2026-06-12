@@ -147,7 +147,6 @@ defineExpose({
   max-width: 100%;
   background-color: var(--ba-bg-color-overlay);
   border-bottom: 1px solid var(--ba-border-color);
-  padding: 13px 15px;
   font-size: 14px;
 }
 
@@ -157,9 +156,5 @@ defineExpose({
   justify-content: center;
   align-items: center;
   gap: 8px;
-}
-
-.ml6 {
-  margin-left: 6px;
 }
 </style>

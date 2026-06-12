@@ -1,5 +1,5 @@
 import { BASE_URL, TIME_OUT } from './request/config'
-import LmwAxios from './request/index'
+import BaseAxios from './request/index'
 import errorCode from '@/utils/errorCode'
 import modal from '@/plugins/modal'
 import { getToken } from '@/utils/auth'
@@ -28,7 +28,7 @@ const isHideMsg = (arr, str) => {
 }
 
 export let isRelogin = { show: false }
-const LmwRequest = new LmwAxios({
+const BaseRequest = new BaseAxios({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   // 单个实例的拦截
@@ -175,15 +175,15 @@ const LmwRequest = new LmwAxios({
     },
   },
 })
-export default LmwRequest
+export default BaseRequest
 export const request = (config) => {
-  return LmwRequest.request(config)
+  return BaseRequest.request(config)
 }
 
 // 通用下载方法
 export function download(url, data, filename, config) {
   modal.loading('正在下载数据，请稍候')
-  return LmwRequest.post({
+  return BaseRequest.post({
     url,
     data,
     transformRequest: [

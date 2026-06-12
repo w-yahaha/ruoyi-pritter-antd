@@ -17,15 +17,15 @@ const layoutInitValue = {
   layoutType: 'auto',
   /* 侧边菜单 */
   // 侧边菜单背景色
-  menuBackground: ['#ffffff', '#1d1e1f'],
+  menuBackground: ['#ffffff', '#1a1a1a'],
   // 侧边菜单文字颜色
-  menuColor: ['#555555', '#b3b3b4'],
-  // 侧边菜单悬停颜色
-  menuHoverBackground: ['#f5f5f5', '#2d2e2f'],
-  // 侧边菜单激活项背景色
-  menuActiveBackground: ['#f5f5f5', '#2d2e2f'],
+  menuColor: ['#1a1a1a', '#ffffff'],
   // 侧边菜单激活项文字色
-  menuActiveColor: ['#1e1e1e', '#e5e5e5'],
+  menuActiveColor: ['#1a1a1a', '#ffffff'],
+  // 侧边菜单悬停背景颜色
+  menuHoverBackground: ['#f1f1f1', '#2d2d2d'],
+  // 侧边菜单激活项背景色
+  menuActiveBackground: ['#f1f1f1', '#2d2d2d'],
   // 侧边菜单宽度(展开时)，单位px
   menuWidth: 245,
   // 侧边菜单项默认图标

@@ -21,7 +21,7 @@ export default () => {
         label: '部门',
         field: 'deptId',
         type: 'treeSelect',
-        options: ref([]),
+        options: [],
         config: {
           fieldNames: { label: 'label', value: 'id', children: 'children' },
           allowClear: true,
@@ -49,16 +49,12 @@ export default () => {
       },
     ],
     colLayout: {
+      xxl: 4,
       xl: 6,
       lg: 8,
       md: 12,
       sm: 12,
       xs: 24,
-    },
-    formConfig: {
-      layout: 'horizontal',
-      labelCol: { style: { width: '80px' } },
-      wrapperCol: { flex: 1 },
     },
   }
 }

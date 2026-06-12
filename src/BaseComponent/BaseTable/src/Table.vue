@@ -69,7 +69,7 @@
     <div
       v-if="pagination"
       ref="footerRef"
-      class="footer lmw-pagination-footer"
+      class="footer pagination-footer"
       :class="{ isSmall }"
     >
       <slot name="footer">
@@ -358,7 +358,6 @@ defineExpose({
   background-color: var(--ba-bg-color-overlay);
   border-bottom: 1px solid var(--ba-border-color);
   font-size: 14px;
-  padding: 0 12px;
   .table-header-operate-text {
     margin-left: 6px;
   }

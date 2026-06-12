@@ -4,3 +4,28 @@
 .ant-table-wrapper tfoot > tr > td {
   padding: 10px;
 }
+
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected > td {
+  background-color: var(--ba-a-table-active);
+}
+
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected:hover > td {
+  background-color: var(--ba-a-table-active);
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background: var(--ba-a-checkbox-check);
+  border-color: var(--ba-a-checkbox-check);
+}
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+  .ant-checkbox-checked:not(.ant-checkbox-disabled)
+  .ant-checkbox-inner {
+  background: var(--ba-a-checkbox-check);
+  border-color: var(--ba-a-checkbox-check);
+}
+.ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover
+  .ant-checkbox-inner,
+.ant-checkbox-checked:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+  background: var(--ba-a-checkbox-check);
+  border-color: var(--ba-a-checkbox-check);
+}

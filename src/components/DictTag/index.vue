@@ -17,7 +17,7 @@
           :disable-transitions="true"
           :key="item.value + ''"
           :index="index"
-          :type="item.elTagType"
+          :color="getColor(item.elTagType)"
           :class="item.elTagClass"
           >{{ item.label + ' ' }}
         </a-tag>
@@ -81,6 +81,15 @@ function handleArray(array) {
   return array.reduce((pre, cur) => {
     return pre + ' ' + cur
   })
+}
+
+function getColor(type) {
+  if (type === 'primary') return 'blue'
+  if (type === 'success') return 'green'
+  if (type === 'info') return 'gray'
+  if (type === 'warning') return 'yellow'
+  if (type === 'danger') return 'red'
+  return type
 }
 </script>
 

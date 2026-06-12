@@ -5,8 +5,8 @@
 $bg-color: () !default;
 $bg-color: map.merge(
   (
-    '': #141414,
-    'overlay': #1d1e1f,
+    '': #2d2d2d,
+    'overlay': #1a1a1a,
   ),
   $bg-color
 );
@@ -15,12 +15,22 @@ $bg-color: map.merge(
 $border-color: () !default;
 $border-color: map.merge(
   (
-    '': #58585b,
+    '': #2d2d2d,
   ),
   $border-color
+);
+
+$a: () !default;
+$a: map.merge(
+  (
+    'table-active': '#232323',
+    'checkbox-check': '#aa9ff8',
+  ),
+  $a
 );
 
 html.dark {
   @include set-component-css-var('bg-color', $bg-color);
   @include set-component-css-var('border-color', $border-color);
+  @include set-component-css-var('a', $a);
 }

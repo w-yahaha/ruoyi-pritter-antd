@@ -20,9 +20,18 @@ $bg-color: map.merge(
 $border-color: () !default;
 $border-color: map.merge(
   (
-    '': #f6f6f6,
+    '': #e4e4e4,
   ),
   $border-color
+);
+
+$a: () !default;
+$a: map.merge(
+  (
+    'table-active': '#f6f8fa',
+    'checkbox-check': '#000000',
+  ),
+  $a
 );
 
 :root {
@@ -30,4 +39,5 @@ $border-color: map.merge(
   @include set-css-var-value('color-primary-light', $primary-light);
   @include set-component-css-var('bg-color', $bg-color);
   @include set-component-css-var('border-color', $border-color);
+  @include set-component-css-var('a', $a);
 }

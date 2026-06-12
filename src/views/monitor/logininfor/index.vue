@@ -74,11 +74,14 @@ const handleExport = () => {
 }
 
 const handleUnlock = async (row) => {
+  row.unlockLoading = true
   const [res] = await to(unlockLogininfor(row.userName))
   if (res) {
-    proxy.$modal.notifySuccess('用户' + row.userName + '解锁成功')
+    const msg = `用户${row.userName}解锁成功`
+    proxy.$modal.msgSuccess(msg)
     search()
   }
+  row.unlockLoading = false
 }
 
 onMounted(() => {
@@ -136,6 +139,7 @@ onMounted(() => {
             type="primary"
             size="small"
             v-hasPermi="['monitor:logininfor:unlock']"
+            :loading="backData.unlockLoading"
           >
             <template #icon>
               <SvgIcon size="12" iconClass="lock-open" />

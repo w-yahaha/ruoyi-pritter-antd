@@ -37,11 +37,9 @@ const getDeptTree = async () => {
 }
 const getPostAndRole = async () => {
   const [res] = await to(getUser())
-  console.log(res)
   if (res) {
     postOptions.value = res.posts ?? []
     roleOptions.value = res.roles ?? []
-    console.log(roleOptions.value)
   }
 }
 
@@ -95,7 +93,7 @@ const [dialogRef, infoInit, addClick, editBtnClick] = useDialog(
   '添加'
 )
 
-const dialogWidth = ref('700px')
+const dialogWidth = ref('600px')
 const searchData = computed(() => {
   return pageContentRef.value?.finalSearchData
 })

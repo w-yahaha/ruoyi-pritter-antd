@@ -61,8 +61,8 @@ const onMenuCollapse = () => {
   gap: 16px;
   height: 56px;
   padding: 0 20px;
-  background: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--ba-bg-color-overlay);
+  border-bottom: 1px solid var(--ba-border-color);
 }
 
 .nav-bar-left {
@@ -106,9 +106,11 @@ const onMenuCollapse = () => {
   }
 }
 
-.dark .nav-bar {
-  background: #1d1e1f;
-  border-bottom-color: rgba(255, 255, 255, 0.08);
+.dark {
+  .nav-bar {
+    background: var(--ba-bg-color-overlay);
+    border-bottom: 1px solid var(--ba-border-color);
+  }
 }
 
 .dark .nav-icon-btn {

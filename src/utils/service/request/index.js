@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-class LmwAxios {
+class BaseAxios {
   constructor(config) {
     this.instance = axios.create(config)
     this.interceptors = config.interceptors
@@ -65,4 +65,4 @@ class LmwAxios {
     return this.request({ ...config, method: 'PUT' })
   }
 }
-export default LmwAxios
+export default BaseAxios

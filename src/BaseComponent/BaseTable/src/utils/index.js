@@ -66,9 +66,9 @@ export const getColumnBind = (item, align) => {
   }
 
   for (const [key, value] of Object.entries(item)) {
-    if (COLUMN_META_KEYS.has(key) || value === undefined || value === false) {
-      continue
-    }
+    // if (COLUMN_META_KEYS.has(key) || value === undefined || value === false) {
+    //   continue
+    // }
     bind[key] = value
   }
 

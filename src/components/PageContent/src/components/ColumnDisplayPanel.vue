@@ -72,7 +72,7 @@ const emit = defineEmits(['change-column', 'drag-update', 'reset-sort'])
     min-width: 180px;
     max-height: 380px;
     overflow-y: auto;
-    background: var(--ba-bg-color-overlay, #fff);
+    background: var(--ba-bg-color-overlay);
     border-radius: 6px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   }

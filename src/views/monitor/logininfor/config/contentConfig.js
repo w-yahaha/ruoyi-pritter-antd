@@ -8,12 +8,12 @@ export const tableItem = [
     prop: 'userName',
     label: '用户名称',
     sorter: true,
-    minWidth: 120,
+    minWidth: 100,
   },
   {
     prop: 'ipaddr',
     label: '地址',
-    minWidth: 120,
+    minWidth: 140,
   },
   {
     prop: 'loginLocation',
@@ -23,12 +23,12 @@ export const tableItem = [
   {
     prop: 'os',
     label: '操作系统',
-    minWidth: 100,
+    minWidth: 140,
   },
   {
     prop: 'browser',
     label: '浏览器',
-    minWidth: 100,
+    minWidth: 120,
   },
   {
     prop: 'status',
@@ -39,13 +39,13 @@ export const tableItem = [
   {
     prop: 'msg',
     label: '描述',
-    minWidth: 100,
+    minWidth: 150,
   },
   {
     prop: 'loginTime',
     label: '访问时间',
     sorter: true,
-    minWidth: 160,
+    minWidth: 170,
   },
   {
     prop: 'todo',
