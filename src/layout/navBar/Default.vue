@@ -5,6 +5,7 @@ import Local from '@/utils/useStorage'
 import GlobalSearch from '../components/GlobalSearch/GlobalSearch.vue'
 import NavMenus from './NavMenus.vue'
 import NavTabs from './Tabs.vue'
+import { showShade } from '@/utils/pageShade'
 
 defineOptions({ name: 'DefaultNavBar' })
 
@@ -15,7 +16,14 @@ const showRightPanel = defineModel('showRightPanel', {
 })
 
 const onMenuCollapse = () => {
-  config.setLayout('menuCollapse', !config.layout.menuCollapse)
+  if (config.layout.shrink) {
+    config.setLayout('menuCollapse', false)
+    showShade('ba-aside-menu-shade', () => {
+      config.setLayout('menuCollapse', true)
+    })
+  } else {
+    config.setLayout('menuCollapse', !config.layout.menuCollapse)
+  }
   Local.set(BEFORE_RESIZE_LAYOUT, {
     layoutMode: config.layout.layoutMode,
     menuCollapse: config.layout.menuCollapse,

@@ -249,7 +249,9 @@ init()
           v-hasPermi="['system:user:import']"
           @click="handleImport"
         >
-          <SvgIcon size="14" iconClass="upload" />
+          <template #icon>
+            <SvgIcon size="14" iconClass="upload" />
+          </template>
           <span class="ml6">导入</span>
         </a-button>
         <a-button
@@ -258,7 +260,9 @@ init()
           @click="handleExport"
           type="dashed"
         >
-          <SvgIcon size="14" iconClass="download" />
+          <template #icon>
+            <SvgIcon size="14" iconClass="download" />
+          </template>
           <span class="ml6">导出</span>
         </a-button>
       </template>
@@ -288,7 +292,9 @@ init()
           v-hasPermi="['system:user:resetPwd']"
           v-if="backData.userId !== 1"
         >
-          <SvgIcon size="12" iconClass="key" />
+          <template #icon>
+            <SvgIcon size="12" iconClass="key" />
+          </template>
           <span class="ml6">重置密码</span>
         </a-button>
       </template>

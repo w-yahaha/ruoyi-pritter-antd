@@ -11,21 +11,17 @@ const config = useConfig()
 const userStore = useUserStore()
 const { nickName, name, avatar } = storeToRefs(userStore)
 
-const menuWidth = computed(() => config.menuWidth())
-const siderWidth = computed(() =>
-  config.layout.menuCollapse ? 64 : config.layout.menuWidth
-)
+const siderCollapsedWidth = computed(() => config.menuWidth())
 </script>
 
 <template>
   <a-layout-sider
     class="layout-aside"
-    :class="{
-      shrink: config.layout.shrink,
-      collapsed: config.layout.menuCollapse,
-    }"
-    :width="siderWidth"
-    :style="{ width: menuWidth, minWidth: menuWidth, maxWidth: menuWidth }"
+    :class="{ shrink: config.layout.shrink }"
+    :width="config.layout.menuWidth"
+    :collapsed-width="siderCollapsedWidth"
+    :collapsed="config.layout.menuCollapse"
+    :trigger="null"
   >
     <div class="sidebar-user" v-if="!config.layout.menuCollapse">
       <a-avatar :size="36" :src="avatar">
@@ -69,7 +65,7 @@ const siderWidth = computed(() =>
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 9999999;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   }
 }

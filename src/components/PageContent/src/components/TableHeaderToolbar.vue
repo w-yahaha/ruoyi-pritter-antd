@@ -65,7 +65,9 @@ const includes = (name) => props.headerButtons.includes(name)
       <div v-if="showLeft">
         <div class="flex">
           <a-button v-if="includes('refresh')" @click="emit('refresh')">
-            <SvgIcon icon-class="sync-alt" :size="13" />
+            <template #icon>
+              <SvgIcon icon-class="sync-alt" :size="13" />
+            </template>
           </a-button>
 
           <a-button
@@ -74,7 +76,9 @@ const includes = (name) => props.headerButtons.includes(name)
             class="order5"
             @click="emit('add')"
           >
-            <SvgIcon :size="14" icon-class="plus" />
+            <template #icon>
+              <SvgIcon :size="14" icon-class="plus" />
+            </template>
             <span class="ml6">添加</span>
           </a-button>
 
@@ -85,13 +89,15 @@ const includes = (name) => props.headerButtons.includes(name)
             :disabled="!canEditSelected"
             @click="emit('edit')"
           >
-            <SvgIcon :size="14" icon-class="pencil" />
+            <template #icon>
+              <SvgIcon :size="14" icon-class="pencil" />
+            </template>
             <span class="ml6">编辑</span>
           </a-button>
 
           <a-popconfirm
             v-if="includes('delete') && hasPermi(permission.del)"
-            title="确定删除选中记录？"
+            :title="`确定删除选中的${tableSelected.length}条记录？`"
             ok-text="确认"
             class="order15"
             cancel-text="取消"
@@ -99,7 +105,9 @@ const includes = (name) => props.headerButtons.includes(name)
             @confirm="emit('delete', tableSelected)"
           >
             <a-button danger type="primary" :disabled="!hasSelection">
-              <SvgIcon :size="14" icon-class="trash" />
+              <template #icon>
+                <SvgIcon :size="14" icon-class="trash" />
+              </template>
               <span class="ml6">删除</span>
             </a-button>
           </a-popconfirm>
@@ -132,7 +140,9 @@ const includes = (name) => props.headerButtons.includes(name)
               class="table-search-button-item"
               @click="emit('toggle-search')"
             >
-              <SvgIcon size="14" icon-class="ant-icon-SearchOutlined" />
+              <template #icon>
+                <SvgIcon size="14" icon-class="ant-icon-SearchOutlined" />
+              </template>
             </a-button>
           </a-tooltip>
         </div>

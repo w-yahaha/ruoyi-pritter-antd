@@ -1,5 +1,6 @@
 <script setup>
 import { useConfig } from '@/store/modules/layout'
+import { closeShade } from '@/utils/pageShade'
 import { BEFORE_RESIZE_LAYOUT } from '@/store/constant/cacheKey'
 import Local from '@/utils/useStorage'
 
@@ -7,7 +8,12 @@ const appTitle = import.meta.env.VITE_APP_TITLE || '若依管理系统'
 const config = useConfig()
 
 const onMenuCollapse = () => {
-  config.setLayout('menuCollapse', !config.layout.menuCollapse)
+  if (config.layout.shrink) {
+    config.setLayout('menuCollapse', true)
+    closeShade()
+  } else {
+    config.setLayout('menuCollapse', !config.layout.menuCollapse)
+  }
   Local.set(BEFORE_RESIZE_LAYOUT, {
     layoutMode: config.layout.layoutMode,
     menuCollapse: config.layout.menuCollapse,

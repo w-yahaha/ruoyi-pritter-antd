@@ -7,9 +7,9 @@ export function buildAntTheme(isDark) {
     cssVar: {
       key: 'ant',
     },
-    token: {
-      colorPrimary: '#141414',
-    },
+    // token: {
+    //   colorPrimary: '#141414',
+    // },
     hashed: false,
   }
 }

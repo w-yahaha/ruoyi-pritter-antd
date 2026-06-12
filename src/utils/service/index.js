@@ -98,12 +98,10 @@ const LmwRequest = new LmwAxios({
     },
     //  响应拦截
     responseInterceptor: (res) => {
-      console.log('responseInterceptor', res)
       // 未设置状态码则默认成功状态
       const code = res.data.code || 200
       // 获取错误信息
       const msg = errorCode[code] || res.data.msg || errorCode['default']
-      console.log({ msg, code })
       // 二进制数据则直接返回
       if (
         res.request.responseType === 'blob' ||

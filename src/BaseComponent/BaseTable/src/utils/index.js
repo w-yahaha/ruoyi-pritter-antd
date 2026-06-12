@@ -13,7 +13,40 @@ const COLUMN_META_KEYS = new Set([
   'mobileSlot',
   'isHidden',
   'slotNames',
+  'minWidth',
+  'width',
 ])
+
+const normalizeColumnWidth = (item) => {
+  const raw = item.width ?? item.minWidth
+  if (raw === undefined || raw === null || raw === false) {
+    return undefined
+  }
+  const width = Number(raw)
+  return Number.isFinite(width) ? width : undefined
+}
+
+export const getColumnKey = (column) => column.key ?? column.dataIndex
+
+export const applyColumnWidths = (columns, widthMap = {}) => {
+  return columns.map((column) => {
+    if (column.children?.length) {
+      return {
+        ...column,
+        children: applyColumnWidths(column.children, widthMap),
+      }
+    }
+
+    const key = getColumnKey(column)
+    const width = key ? (widthMap[key] ?? column.width) : column.width
+
+    return {
+      ...column,
+      ...(width !== undefined ? { width } : {}),
+      resizable: width !== undefined,
+    }
+  })
+}
 
 export const isHiddenItem = (item, hideItems) => {
   if (item.hide || item.isHidden) return true
@@ -44,11 +77,21 @@ export const getColumnBind = (item, align) => {
 
 const buildColumn = (item, align) => {
   const bind = getColumnBind(item, align)
+  const width = normalizeColumnWidth(item)
+
+  if (width !== undefined) {
+    bind.width = width
+  } else {
+    delete bind.width
+  }
+
   return {
     title: item.label,
     dataIndex: item.prop,
     slotName: item.slotName,
     columnItem: item,
+    resizable: width !== undefined,
+    ellipsis: item.ellipsis !== false,
     ...bind,
   }
 }
@@ -87,19 +130,23 @@ export const buildTableColumns = (tableItem, hideItems, align, showIndex) => {
   return columns
 }
 
-export const getTableScrollX = (tableItem, showIndex) => {
-  const hasFixed = tableItem.some((item) => item.fixed)
-  if (!hasFixed) return undefined
+export const getTableScrollX = (tableItem, showIndex, widthMap = {}) => {
+  let total = showIndex ? (widthMap.__index ?? 55) : 0
+  let hasExplicitWidth = showIndex
 
-  const totalWidth = tableItem.reduce(
-    (sum, item) => {
-      const width = Number(item.width)
-      return sum + (Number.isFinite(width) ? width : 0)
-    },
-    showIndex ? 55 : 0
-  )
+  for (const item of tableItem) {
+    const width = widthMap[item.prop] ?? normalizeColumnWidth(item)
+    if (width !== undefined) {
+      total += width
+      hasExplicitWidth = true
+    }
+  }
 
-  return totalWidth || 'max-content'
+  if (!hasExplicitWidth) {
+    return undefined
+  }
+
+  return total || 'max-content'
 }
 
 export const hasSlot = (slots, names) => {

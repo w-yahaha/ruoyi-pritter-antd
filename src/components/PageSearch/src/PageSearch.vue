@@ -122,11 +122,15 @@ defineExpose({
               :loading="searchLoading"
               @click="search(false)"
             >
-              <SvgIcon icon-class="ant-icon-SearchOutlined" :size="14" />
+              <template #icon>
+                <SvgIcon icon-class="ant-icon-SearchOutlined" :size="14" />
+              </template>
               <span class="ml6">检索</span>
             </a-button>
             <a-button :loading="searchLoading" @click="resetForm(true)">
-              <SvgIcon icon-class="sync-alt" :size="14" />
+              <template #icon>
+                <SvgIcon icon-class="ant-icon-SyncOutlined" :size="14" />
+              </template>
               <span class="ml6">重置</span>
             </a-button>
           </div>
@@ -142,8 +146,7 @@ defineExpose({
   width: 100%;
   max-width: 100%;
   background-color: var(--ba-bg-color-overlay);
-  border: 1px solid var(--ba-border-color);
-  border-bottom: none;
+  border-bottom: 1px solid var(--ba-border-color);
   padding: 13px 15px;
   font-size: 14px;
 }

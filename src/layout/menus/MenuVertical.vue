@@ -158,7 +158,6 @@ function onOpenChange(keys) {
       class="layouts-menu-vertical"
       mode="inline"
       theme="light"
-      :inline-collapsed="config.layout.menuCollapse"
       :selected-keys="[activeMenu]"
       :open-keys="openKeys"
       @openChange="onOpenChange"

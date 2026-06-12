@@ -81,13 +81,7 @@ const props = defineProps({
   },
   headerButtons: {
     type: Array,
-    default: () => [
-      'refresh',
-      'add',
-      'delete',
-      'columnDisplay',
-      'comSearch',
-    ],
+    default: () => ['refresh', 'add', 'delete', 'columnDisplay', 'comSearch'],
   },
   tableSelected: {
     type: Array,
@@ -256,7 +250,7 @@ defineExpose({
         </template>
 
         <template #todo="{ backData }">
-          <div class="todo flex-center">
+          <div class="todo">
             <slot name="todoSlot" :back-data="backData" />
 
             <a-button
@@ -270,7 +264,9 @@ defineExpose({
               size="small"
               @click="editClick(backData)"
             >
-              <SvgIcon :size="12" icon-class="pencil" />
+              <template #icon>
+                <SvgIcon :size="12" icon-class="pencil" />
+              </template>
               <span class="ml6">编辑</span>
             </a-button>
 
@@ -280,13 +276,15 @@ defineExpose({
                 showDelete &&
                 handleDeleteShow(backData)
               "
-              title="确定删除选中记录？"
+              title="确定删除当前记录？"
               ok-text="确认"
               cancel-text="取消"
               @confirm="deleteRow(backData)"
             >
               <a-button class="del order10" type="primary" danger size="small">
-                <SvgIcon :size="12" icon-class="trash" />
+                <template #icon>
+                  <SvgIcon :size="12" icon-class="trash" />
+                </template>
                 <span class="ml6">删除</span>
               </a-button>
             </a-popconfirm>
@@ -326,7 +324,9 @@ defineExpose({
 <style scoped lang="scss">
 .todo {
   flex-wrap: wrap;
-
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   :deep(.ant-btn) {
     margin: 4px;
   }

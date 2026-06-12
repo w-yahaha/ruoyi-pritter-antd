@@ -14,7 +14,8 @@ export default (item, colLayout) => {
   if (type === 'datepicker' || type === 'daterange') {
     if (isRangeDateItem(item)) {
       layout = {
-        xl: 5,
+        xxl: 6,
+        xl: 8,
         lg: 8,
         md: 10,
         sm: 12,
@@ -24,7 +25,8 @@ export default (item, colLayout) => {
     }
   }
   layout = {
-    xl: 4,
+    xxl: 4,
+    xl: 6,
     lg: 6,
     md: 8,
     sm: 12,

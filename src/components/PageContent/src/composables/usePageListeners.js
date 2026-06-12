@@ -33,7 +33,8 @@ export function usePageListeners(
     }
 
     send(finalSearchData.value).finally(() => {
-      searchFormData.searchLoading && (searchFormData.searchLoading.value = false)
+      searchFormData.searchLoading &&
+        (searchFormData.searchLoading.value = false)
     })
   }
 

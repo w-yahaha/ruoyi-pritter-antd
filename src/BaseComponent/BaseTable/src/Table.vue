@@ -27,6 +27,7 @@
       :row-class-name="rowClassName"
       v-bind="mergedTableConfig"
       @change="onTableChange"
+      @resizeColumn="handleResizeColumn"
     >
       <template #headerCell="{ column }">
         <slot
@@ -80,7 +81,6 @@
           :show-total="paginationOptions.showTotal"
           :show-size-changer="paginationOptions.showSizeChanger"
           :show-quick-jumper="paginationOptions.showQuickJumper"
-          :hide-on-single-page="true"
           @change="handlePageChange"
           @show-size-change="handleSizeChange"
         />
@@ -91,8 +91,10 @@
 
 <script setup>
 import {
+  applyColumnWidths,
   buildTableColumns,
   collectExpandableKeys,
+  getColumnKey,
   getTableScrollX,
   hasSlot,
 } from './utils/index.js'
@@ -144,7 +146,7 @@ const props = defineProps({
   },
   align: {
     type: String,
-    default: 'center',
+    default: 'left',
   },
   paginationLayout: {
     type: String,
@@ -171,15 +173,17 @@ const expandedRowKeys = ref([])
 const isSmall = window.isSmallScreen
 
 let expandAll = false
+const columnWidthMap = ref({})
 
-const tableColumns = computed(() =>
-  buildTableColumns(
+const tableColumns = computed(() => {
+  const columns = buildTableColumns(
     props.tableItem,
     props.hideItems,
     props.align,
     props.showIndex
   )
-)
+  return applyColumnWidths(columns, columnWidthMap.value)
+})
 
 const rowKey = computed(() => props.tableConfig.rowKey || 'id')
 
@@ -228,16 +232,22 @@ const maxHeightComputed = computed(() => {
   if (headerRef.value) {
     headerHeight = headerRef.value.clientHeight
   }
+  const antHeaderHeight =
+    document.querySelector('.ant-table-header')?.clientHeight ?? 0
   if (props.maxTableHeight) {
-    return props.maxTableHeight - headerHeight - footerHeight
+    return props.maxTableHeight - headerHeight - footerHeight - antHeaderHeight
   }
-  return window.innerHeight - 260 - headerHeight - footerHeight
+  return (
+    window.innerHeight - 260 - headerHeight - footerHeight - antHeaderHeight
+  )
 })
 
 const scrollConfig = computed(() => {
   const y = maxHeightComputed.value > 300 ? maxHeightComputed.value : 300
   const { scroll = {} } = props.tableConfig
-  const x = scroll.x ?? getTableScrollX(props.tableItem, props.showIndex)
+  const x =
+    scroll.x ??
+    getTableScrollX(props.tableItem, props.showIndex, columnWidthMap.value)
   return {
     ...scroll,
     y,
@@ -321,6 +331,15 @@ const unFoldAll = (...arg) => {
     : []
 }
 
+const handleResizeColumn = (w, col) => {
+  const key = getColumnKey(col)
+  if (!key) return
+  columnWidthMap.value = {
+    ...columnWidthMap.value,
+    [key]: w,
+  }
+}
+
 defineExpose({
   tableRef,
   unFoldAll,
@@ -337,11 +356,9 @@ defineExpose({
   width: 100%;
   max-width: 100%;
   background-color: var(--ba-bg-color-overlay);
-  border: 1px solid var(--ba-border-color);
-  border-bottom: none;
+  border-bottom: 1px solid var(--ba-border-color);
   font-size: 14px;
   padding: 0 12px;
-
   .table-header-operate-text {
     margin-left: 6px;
   }

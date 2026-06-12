@@ -33,10 +33,8 @@ watch(
 
 <style scoped lang="scss">
 .layout-main {
-  margin: 0;
-  padding: 16px;
-  background: var(--body-background, #f5f7fa);
-  height: calc(100vh - 56px);
-  overflow: auto;
+  background-color: var(--ba-bg-color-overlay);
+  margin: var(--ba-main-space);
+  // max-height: calc(100vh - 56px - var(--ba-main-space) * 2);
 }
 </style>

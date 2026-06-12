@@ -9,8 +9,9 @@ const dateRef = useTemplateRef('dateRef')
 const isRange = computed(() => props.item.config?.range === true)
 
 const dateConfig = computed(() => ({
-  placeholder: isRange.value ? undefined : '请选择' + props.item.label,
+  placeholder: isRange.value ? void 0 : '请选择' + props.item.label,
   valueFormat: 'YYYY-MM-DD',
+  format: 'YYYY-MM-DD',
   inputReadOnly: true,
   ...props.item.config,
 }))
