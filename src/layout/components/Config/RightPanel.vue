@@ -69,7 +69,7 @@ const restoreDefault = () => {
         <div class="layout-mode-styles-box">
           <a-divider dashed>布局方式</a-divider>
           <div class="layout-mode-box-style">
-            <div class="layout-mode-style default active">
+            <div class="layout-mode-style classic active">
               <div class="layout-mode-style-box">
                 <div class="layout-mode-style-aside"></div>
                 <div class="layout-mode-style-container-box">
@@ -77,7 +77,7 @@ const restoreDefault = () => {
                   <div class="layout-mode-style-container"></div>
                 </div>
               </div>
-              <div class="layout-mode-style-name">默认</div>
+              <div class="layout-mode-style-name">经典</div>
             </div>
           </div>
 
@@ -276,34 +276,28 @@ const restoreDefault = () => {
     width: 100%;
     height: 100%;
   }
-
-  &.default {
+  &.classic {
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-
     .layout-mode-style-aside {
       width: 18%;
-      height: 90%;
-      background-color: rgba(0, 0, 0, 0.06);
+      height: 100%;
+      background-color: #ebeef5;
     }
-
     .layout-mode-style-container-box {
-      width: 68%;
-      height: 90%;
-      margin-left: 4%;
-
+      width: 82%;
+      height: 100%;
       .layout-mode-style-header {
         width: 100%;
         height: 10%;
-        background-color: rgba(0, 0, 0, 0.06);
+        background-color: #dcdfe6;
       }
-
       .layout-mode-style-container {
         width: 100%;
-        height: 85%;
-        background-color: rgba(0, 0, 0, 0.04);
-        margin-top: 5%;
+        height: 90%;
+        background-color: #f2f6fc;
       }
     }
   }

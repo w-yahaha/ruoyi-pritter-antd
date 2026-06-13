@@ -193,7 +193,7 @@ init()
           <span class="ml6">导出</span>
         </el-button>
         <el-button class="order18 ml12" type="warning" @click="handleClose">
-          <SvgIcon size="14" iconClass="times" />
+          <SvgIcon size="14" iconClass="close" />
           <span class="ml6">关闭</span>
         </el-button>
       </template>

@@ -133,7 +133,7 @@ getJobInfo()
           <span class="ml6">导出</span>
         </el-button>
         <el-button class="order17 ml12" @click="handleClose" type="warning">
-          <SvgIcon size="14" iconClass="times" />
+          <SvgIcon size="14" iconClass="close" />
           <span class="ml6">关闭</span>
         </el-button>
       </template>

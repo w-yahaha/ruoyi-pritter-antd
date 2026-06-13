@@ -123,7 +123,7 @@ defineExpose({
               @click="search(false)"
             >
               <template #icon>
-                <SvgIcon icon-class="ant-icon-SearchOutlined" :size="14" />
+                <SvgIcon icon-class="search" :size="14" />
               </template>
               <span class="ml6">检索</span>
             </a-button>

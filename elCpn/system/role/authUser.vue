@@ -144,14 +144,14 @@ init()
           >
             <template #reference>
               <el-button type="danger" :disabled="tableSelected.length === 0">
-                <SvgIcon size="14" iconClass="times"></SvgIcon>
+                <SvgIcon size="14" iconClass="close"></SvgIcon>
                 <span class="ml6">批量取消授权</span>
               </el-button>
             </template>
           </el-popconfirm>
         </div>
         <el-button class="ml12" @click="handleClose" type="warning">
-          <SvgIcon size="14" iconClass="times" />
+          <SvgIcon size="14" iconClass="close" />
           <span class="ml6">关闭</span>
         </el-button>
       </template>
@@ -163,7 +163,7 @@ init()
           @click="handleAuthUser(backData)"
           v-hasPermi="['system:role:edit']"
         >
-          <SvgIcon size="11" iconClass="times" />
+          <SvgIcon size="11" iconClass="close" />
           <span class="ml6">取消授权</span>
         </el-button>
       </template>

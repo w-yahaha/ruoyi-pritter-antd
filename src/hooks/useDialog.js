@@ -11,8 +11,8 @@ export default function useDialog(
   const infoInit = ref({})
   const addClick = () => {
     if (dialogRef.value) {
-      dialogRef.value.title = title
-      dialogRef.value.dialogVisible = true
+      dialogRef.value.setTitle(title)
+      dialogRef.value.openModal()
       infoInit.value = {}
     }
     addCallBack && addCallBack()
@@ -20,8 +20,8 @@ export default function useDialog(
   const editBtnClick = (item, res) => {
     infoInit.value = { ...item }
     if (dialogRef.value) {
-      dialogRef.value.title = editTitle
-      dialogRef.value.dialogVisible = true
+      dialogRef.value.setTitle(editTitle)
+      dialogRef.value.openModal()
     }
     editCallback && editCallback(item, res)
   }

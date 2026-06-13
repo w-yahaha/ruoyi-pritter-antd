@@ -34,16 +34,12 @@ const onMenuCollapse = () => {
 <template>
   <div class="nav-bar">
     <div class="nav-bar-left">
-      <button type="button" class="nav-icon-btn" @click="onMenuCollapse">
+      <div class="nav-icon-btn" @click="onMenuCollapse">
         <SvgIcon
-          :icon-class="
-            config.layout.menuCollapse
-              ? 'ant-icon-MenuUnfoldOutlined'
-              : 'ant-icon-MenuFoldOutlined'
-          "
+          :icon-class="config.layout.menuCollapse ? 'indent' : 'dedent'"
           :size="16"
         />
-      </button>
+      </div>
       <NavTabs class="nav-bar-tabs" />
     </div>
 

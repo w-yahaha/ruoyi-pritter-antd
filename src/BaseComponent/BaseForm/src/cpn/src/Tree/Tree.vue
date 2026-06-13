@@ -5,14 +5,20 @@ const props = defineProps({
   item: { type: Object, required: true },
   allDisabled: { type: Boolean },
 })
+const value = defineModel('value')
 const treeRef = useTemplateRef('treeRef')
 
-const treeConfig = computed(() => ({
-  style: { width: '100%' },
-  fieldNames: props.item.config?.fieldNames ?? defaultTreeFieldNames,
-  ...props.item.config,
-  treeData: props.item.config?.treeData ?? getOptions(props.item),
-}))
+const treeConfig = computed(() => {
+  const config = props.item.config ?? {}
+  const { treeData, fieldNames, ...restConfig } = config
+
+  return {
+    style: { width: '100%' },
+    fieldNames: fieldNames ?? defaultTreeFieldNames,
+    treeData: treeData ?? getOptions(props.item),
+    ...restConfig,
+  }
+})
 
 const getRef = () => treeRef.value
 defineExpose({ getRef })
@@ -21,6 +27,7 @@ defineExpose({ getRef })
 <template>
   <a-tree
     ref="treeRef"
+    v-model:checkedKeys="value"
     v-bind="treeConfig"
     :id="item.field"
     v-on="item.eventFunction || {}"

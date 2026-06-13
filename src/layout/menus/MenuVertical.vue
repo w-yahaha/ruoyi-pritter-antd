@@ -1,7 +1,7 @@
 <script setup>
 import { useConfig } from '@/store/modules/layout'
 import usePermissionStore from '@/store/modules/permission'
-import { resolveMenuPath } from './menuPath'
+import { getMenuSubmenuKey, resolveSubMenuKey } from './menuPath'
 import MenuTree from './MenuTree.vue'
 
 const permissionStore = usePermissionStore()
@@ -21,10 +21,6 @@ const activeMenu = computed(() => {
 const openKeys = ref([])
 const preOpenKeys = ref([])
 const skipOpenChange = ref(false)
-
-function resolveMenuKey(basePath, routePath) {
-  return resolveMenuPath(basePath, routePath)
-}
 
 function isSubMenuRoute(route) {
   if (route.hidden) {
@@ -49,7 +45,7 @@ function isSubMenuRoute(route) {
 const rootSubmenuKeys = computed(() =>
   sidebarRouters.value
     .filter(isSubMenuRoute)
-    .map((route) => resolveMenuKey(route.path, route.path))
+    .map((route) => resolveSubMenuKey(route.path, route.path, false))
 )
 
 function getOpenKeys() {
@@ -62,7 +58,7 @@ function getOpenKeys() {
         return
       }
 
-      const menuKey = resolveMenuKey(basePath, menuRoute.path)
+      const menuKey = getMenuSubmenuKey(menuRoute, basePath)
       const children = (menuRoute.children || []).filter(
         (child) => !child.hidden
       )
@@ -109,6 +105,8 @@ watch(
   { immediate: true }
 )
 
+watch(sidebarRouters, () => syncOpenKeysFromRoute(), { deep: true })
+
 watch(
   () => config.layout.menuCollapse,
   (collapsed) => {
@@ -136,12 +134,7 @@ function onOpenChange(keys) {
   const latestOpenKey = keys.find((key) => !openKeys.value.includes(key))
 
   if (latestOpenKey && rootSubmenuKeys.value.includes(latestOpenKey)) {
-    openKeys.value = keys.filter((key) => {
-      if (rootSubmenuKeys.value.includes(key)) {
-        return key === latestOpenKey
-      }
-      return key.startsWith(`${latestOpenKey}/`)
-    })
+    openKeys.value = [latestOpenKey]
     return
   }
 
@@ -160,7 +153,7 @@ function onOpenChange(keys) {
       theme="light"
       :selected-keys="[activeMenu]"
       :open-keys="openKeys"
-      @openChange="onOpenChange"
+      @update:open-keys="onOpenChange"
     >
       <MenuTree
         v-for="(menuRoute, index) in sidebarRouters"

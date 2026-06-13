@@ -66,7 +66,7 @@ const includes = (name) => props.headerButtons.includes(name)
         <div class="flex">
           <a-button v-if="includes('refresh')" @click="emit('refresh')">
             <template #icon>
-              <SvgIcon icon-class="sync-alt" :size="13" />
+              <SvgIcon icon-class="sync-alt" :size="12" />
             </template>
           </a-button>
 
@@ -136,14 +136,12 @@ const includes = (name) => props.headerButtons.includes(name)
             :title="showPageSearch ? '关闭搜索' : '展开搜索'"
             placement="top"
           >
-            <a-button
+            <div
               class="table-search-button-item"
               @click="emit('toggle-search')"
             >
-              <template #icon>
-                <SvgIcon size="14" icon-class="ant-icon-SearchOutlined" />
-              </template>
-            </a-button>
+              <SvgIcon size="14" icon-class="search" />
+            </div>
           </a-tooltip>
         </div>
 
@@ -186,9 +184,17 @@ const includes = (name) => props.headerButtons.includes(name)
   }
 
   :deep(.table-search-button-item) {
+    padding: 0;
+    width: 32px;
     height: 30px;
-    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 0;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--ba-bg-color);
+    }
   }
 
   .ant-btn + .ant-btn {
@@ -199,10 +205,6 @@ const includes = (name) => props.headerButtons.includes(name)
     outline: none;
     outline-offset: 0;
   }
-}
-
-.ml6 {
-  margin-left: 6px;
 }
 
 .flex {

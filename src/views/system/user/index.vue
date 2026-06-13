@@ -259,7 +259,7 @@ init()
           type="dashed"
         >
           <template #icon>
-            <SvgIcon size="14" iconClass="download" />
+            <SvgIcon size="14" iconClass="export" />
           </template>
           <span class="ml6">导出</span>
         </a-button>

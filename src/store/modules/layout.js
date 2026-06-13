@@ -8,13 +8,9 @@ const layoutInitValue = {
   // 是否收缩布局(小屏设备)
   shrink: false,
   // 后台布局方式，可选值<Default|Classic|Streamline|Double>
-  layoutMode: 'Default',
+  layoutMode: 'Classic',
   // 是否暗黑模式
   isDark: false,
-  // 是否已经开启移动端展示
-  isMobile: false,
-  // 布局形式 可选值<auto|mobile|desktop>
-  layoutType: 'auto',
   /* 侧边菜单 */
   // 侧边菜单背景色
   menuBackground: ['#ffffff', '#1a1a1a'],
@@ -48,13 +44,6 @@ export const useConfig = defineStore(
     }
 
     const setLayout = (name, value) => {
-      if (name === 'layoutType') {
-        if (value === 'auto') {
-          layout.isMobile = window.isSmallScreen
-        } else {
-          layout.isMobile = value === 'mobile'
-        }
-      }
       layout[name] = value
       syncLayoutCssVars({ layout, getColorVal })
     }
@@ -71,14 +60,6 @@ export const useConfig = defineStore(
       }
     }
     const init = () => {
-      if (layout.layoutType === 'auto') {
-        layout.isMobile = window.isSmallScreen
-      } else {
-        layout.isMobile = layout.layoutType === 'mobile'
-      }
-      if (window.isSmallScreen) {
-        setLayoutMode('Classic')
-      }
       syncLayoutCssVars({ layout, getColorVal })
     }
     return {

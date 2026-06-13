@@ -531,7 +531,7 @@ defineExpose({
                   color="#40485b"
                   @click="refresh"
                 >
-                  <SvgIcon iconClass="refresh" :size="13"></SvgIcon>
+                  <SvgIcon iconClass="sync-alt" :size="13"></SvgIcon>
                 </el-button>
                 <el-button
                   type="primary"

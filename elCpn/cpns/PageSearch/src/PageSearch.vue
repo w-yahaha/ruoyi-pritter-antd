@@ -106,7 +106,7 @@ defineExpose({
             >
             <el-button
               @click="resetForm(true)"
-              icon="Refresh"
+              icon="sync-alt"
               :loading="searchLoading"
             >
               重置

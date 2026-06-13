@@ -50,7 +50,7 @@ const onProfile = () => {
     <a-tooltip title="主题切换">
       <button type="button" class="nav-menu-item" @click="toggleDarkLight">
         <SvgIcon
-          :iconClass="configStore.layout.isDark ? 'icon-light' : 'icon-dark'"
+          :iconClass="configStore.layout.isDark ? 'light' : 'dark'"
           :size="16"
         />
       </button>
@@ -59,11 +59,7 @@ const onProfile = () => {
     <a-tooltip :title="isFullScreen ? '退出全屏' : '全屏'">
       <button type="button" class="nav-menu-item" @click="onFullScreen">
         <SvgIcon
-          :icon-class="
-            isFullScreen
-              ? 'ant-icon-FullscreenExitOutlined'
-              : 'ant-icon-FullscreenOutlined'
-          "
+          :icon-class="isFullScreen ? 'fullScreenCancel' : 'fullscreen'"
           :size="16"
         />
       </button>
@@ -94,7 +90,7 @@ const onProfile = () => {
         :class="{ active: showRightPanel }"
         @click="showRightPanel = !showRightPanel"
       >
-        <SvgIcon icon-class="ant-icon-SettingOutlined" :size="16" />
+        <SvgIcon icon-class="cogs" :size="16" />
       </button>
     </a-tooltip>
   </div>

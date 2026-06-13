@@ -19,3 +19,11 @@ export function resolveSubMenuKey(basePath, itemPath, isNest) {
   }
   return resolveMenuPath(basePath, itemPath)
 }
+
+/** 与 MenuTree 中 a-sub-menu 的 key 保持一致 */
+export function getMenuSubmenuKey(menuRoute, basePath) {
+  if (!basePath) {
+    return resolveSubMenuKey(menuRoute.path, menuRoute.path, false)
+  }
+  return resolveMenuPath(basePath, menuRoute.path)
+}

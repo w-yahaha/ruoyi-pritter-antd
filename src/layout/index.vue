@@ -5,11 +5,11 @@ import { BEFORE_RESIZE_LAYOUT } from '@/store/constant/cacheKey'
 import Local from '@/utils/useStorage'
 import { getToken, setToken } from '@/utils/auth'
 import { isSmallScreen } from '@/plugins'
-import Default from './container/Default.vue'
+import Classic from './container/Classic'
 
 defineOptions({
   name: 'Layout',
-  components: { Default },
+  components: { Classic },
 })
 
 const config = useConfig()

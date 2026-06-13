@@ -459,5 +459,6 @@ export const getDialogMaxHeight = (elementClass) => {
   if (!isSmall) {
     maxHeight -= marginBottom
   }
+  console.log({ maxHeight })
   return maxHeight
 }

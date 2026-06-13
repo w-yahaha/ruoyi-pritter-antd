@@ -1,7 +1,12 @@
 // .ant-checkbox .ant-checkbox-inner:after {
 //   border-color: var(--ba-a-checkbox-icon);
 // }
-
+.ant-table-wrapper .ant-table-thead > tr > th,
+.ant-table-wrapper .ant-table-tbody > tr > td,
+.ant-table-wrapper tfoot > tr > th,
+.ant-table-wrapper tfoot > tr > td {
+  padding: 10px;
+}
 .ant-table-wrapper .ant-table-thead > tr > th,
 .ant-table-wrapper .ant-table-thead > tr > td {
   background: var(--ba-bg-color-overlay);

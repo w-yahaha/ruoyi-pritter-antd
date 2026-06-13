@@ -4,7 +4,7 @@ import Header from '../components/Header.vue'
 import Main from '../components/Main.vue'
 import RightPanel from '../components/Config/RightPanel.vue'
 
-defineOptions({ name: 'DefaultLayout' })
+defineOptions({ name: 'ClassicLayout' })
 
 const showRightPanel = ref(false)
 </script>

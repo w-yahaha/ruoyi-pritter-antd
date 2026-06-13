@@ -164,10 +164,7 @@ const getFooterPaddingRight = () => {
   const { paddingRight: dialogBodyPaddingRight } =
     getElementTotalSize(dialogBody)
   footerPaddingRight.value =
-    baseFromPaddingRight +
-    formItemPaddingRight +
-    dialogBodyPaddingRight +
-    'px'
+    baseFromPaddingRight + formItemPaddingRight + dialogBodyPaddingRight + 'px'
 }
 
 const dialogClosed = () => {
@@ -197,14 +194,23 @@ const handleOpened = () => {
 }
 
 const modalWrapClass = computed(() => {
-  return ['pageDialog', dialogClass.value, isSmall ? 'page-dialog-fullscreen' : '']
-    .filter(Boolean)
-    .join(' ')
+  if (isSmall) {
+    console.log('full-modal')
+    return 'full-modal'
+  }
+  return ['pageDialog', dialogClass.value].filter(Boolean).join(' ')
 })
-
+const openModal = () => {
+  dialogVisible.value = true
+  handleOpened()
+}
+const setTitle = (value) => {
+  title.value = value
+}
 defineExpose({
   dialogVisible,
-  title,
+  openModal,
+  setTitle,
   formData,
   setFormData,
   formRef,
@@ -220,15 +226,17 @@ defineExpose({
       :title="title"
       :width="getWidth(width)"
       :centered="false"
-      :style="isSmall ? undefined : { top }"
+      :style="isSmall ? { top: '0vh' } : { top }"
       :mask-closable="false"
       :destroy-on-close="true"
-      @after-open-change="(open) => open && handleOpened()"
-      @after-close="dialogClosed"
+      @afterClose="dialogClosed"
     >
       <div
         class="ba-table-form-scrollbar"
-        :style="{ maxHeight: dialogMaxHeight ? `${dialogMaxHeight}px` : undefined, overflowY: 'auto' }"
+        :style="{
+          maxHeight: dialogMaxHeight ? `${dialogMaxHeight}px` : undefined,
+          overflowY: 'auto',
+        }"
       >
         <BaseForm
           ref="formRef"
@@ -260,79 +268,4 @@ defineExpose({
   </div>
 </template>
 
-<style scoped lang="scss">
-.page-dialog {
-  :deep(.ant-modal-header) {
-    text-align: left;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--ba-bg-color, #f0f2f5);
-  }
-
-  :deep(.ant-modal-footer) {
-    text-align: right;
-    padding-right: v-bind(footerPaddingRight) !important;
-  }
-
-  :deep(.ant-form-item) {
-    margin: 0 0 18px;
-  }
-
-  .baseForm {
-    padding: 0 15px;
-  }
-
-  :deep(.pageDialog) {
-    .ant-radio-group {
-      width: 100%;
-
-      .ant-radio-wrapper {
-        margin-right: 16px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-  }
-}
-
-.dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-@media screen and (max-width: 768px) {
-  :deep(.pageDialog) {
-    .baseForm {
-      padding: 0 6px;
-    }
-
-    .ant-radio-group {
-      .ant-radio-wrapper {
-        margin-right: 12px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-  }
-}
-</style>
-
-<style lang="scss">
-.page-dialog-fullscreen {
-  .ant-modal {
-    max-width: 100vw;
-    top: 0;
-    padding-bottom: 0;
-    margin: 0;
-  }
-
-  .ant-modal-content {
-    min-height: 100vh;
-    border-radius: 0;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

@@ -12,7 +12,6 @@ export default (item, colLayout) => {
   let layout = {}
   const type = item.type?.toLowerCase()
   if (type === 'datepicker' || type === 'daterange') {
-    console.log({ isRangeDateItem: isRangeDateItem(item) })
     if (isRangeDateItem(item)) {
       layout = {
         xxl: 6,
@@ -22,7 +21,6 @@ export default (item, colLayout) => {
         sm: 12,
         xs: 24,
       }
-      console.log({ layout: item.layout || colLayout || layout })
       return item.layout || layout || colLayout
     }
   }

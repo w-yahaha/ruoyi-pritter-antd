@@ -19,7 +19,7 @@ export function useTableActions(
       : resolveRowId(delData, props)
 
     if (id || id === 0) {
-      await to(
+      const [res] = await to(
         store.deletDataAction({
           id,
           pageName: props.pageName,
@@ -28,11 +28,12 @@ export function useTableActions(
           delUrl: props.delUrl,
         })
       )
-      await to(send(finalSearchData.value))
+      if (res) {
+        send(finalSearchData.value)
+      }
     } else {
       modal.notifyWarning('未获取到有效Id')
     }
-
     isLoading.value = false
   }
 
