@@ -29,7 +29,7 @@
 
 # 联系本人
 
-本人微信：di_huhu <img src="./readmeImgs/pic0.png" />，欢迎大家加入群聊提供建议，
+本人微信：di_huhu <img src="./readmeImgs/pic0.png" />
 无需捐赠，如果觉得项目不错，或者已经在使用了，希望你可以去帮我点个 ⭐ Star。
 
 # 组件使用说明
@@ -143,23 +143,22 @@ const chartOptions = ref({
 
 每个表单项常用字段：
 
-| 字段                    | 类型           | 说明                                   |
-| ----------------------- | -------------- | -------------------------------------- |
-| `field`                 | `String`       | **必填**，字段名，对应 `data[field]`   |
-| `type`                  | `String`       | 控件类型，见下方支持列表               |
-| `label`                 | `String`       | 标签文本                               |
-| `config`                | `Object`       | 透传给对应 Ant Design Vue 控件的属性   |
-| `options`               | `Array \| Ref` | 下拉/单选/多选等选项数据               |
-| `layout`                | `Object`       | 单项栅格布局，优先级高于 `colLayout`   |
-| `isHidden`              | `Boolean`      | 是否隐藏该项                           |
-| `hideLabel`             | `Boolean`      | 是否隐藏标签                           |
-| `tip`                   | `String`       | 标签旁提示文字                         |
-| `tipConfig`             | `Object`       | 提示 Tooltip 配置                      |
-| `formItemConfig`        | `Object`       | 透传给 `a-form-item`                   |
-| `eventFunction`         | `Object`       | 绑定到控件的事件，如 `{ change: fn }`  |
-| `slotNames`             | `Array`        | 控件内部插槽名列表                     |
-| `optionSlots`           | `Array`        | 选项插槽名列表                         |
-| `setValue` / `setLabel` | `String`       | 自定义 options 中 value/label 的字段名 |
+| 字段             | 类型           | 说明                                  |
+| ---------------- | -------------- | ------------------------------------- |
+| `field`          | `String`       | **必填**，字段名，对应 `data[field]`  |
+| `type`           | `String`       | 控件类型，见下方支持列表              |
+| `label`          | `String`       | 标签文本                              |
+| `config`         | `Object`       | 透传给对应 Ant Design Vue 控件的属性  |
+| `options`        | `Array \| Ref` | 下拉/单选/多选等选项数据              |
+| `layout`         | `Object`       | 单项栅格布局，优先级高于 `colLayout`  |
+| `isHidden`       | `Boolean`      | 是否隐藏该项                          |
+| `hideLabel`      | `Boolean`      | 是否隐藏标签                          |
+| `tip`            | `String`       | 标签旁提示文字                        |
+| `tipConfig`      | `Object`       | 提示 Tooltip 配置                     |
+| `formItemConfig` | `Object`       | 透传给 `a-form-item`                  |
+| `eventFunction`  | `Object`       | 绑定到控件的事件，如 `{ change: fn }` |
+| `slotNames`      | `Array`        | 控件内部插槽名列表                    |
+| `optionSlots`    | `Array`        | 选项插槽名列表                        |
 
 ### 支持的 type
 
