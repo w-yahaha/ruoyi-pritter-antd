@@ -441,24 +441,33 @@ export function getElementTotalSize(element) {
 }
 
 export const getDialogMaxHeight = (elementClass) => {
-  const element = document.querySelector(elementClass)
-  if (!element) return 0
-  const header = element.querySelector('.ant-modal-header')
-  const footer = element.querySelector('.ant-modal-footer')
+  const target = document.querySelector(elementClass)
+  if (!target) return 0
 
-  const { marginTop, marginBottom } = getElementTotalSize(element)
+  const modal = target.classList.contains('ant-modal')
+    ? target
+    : target.querySelector('.ant-modal') || target
+
+  const header = modal.querySelector('.ant-modal-header')
+  const footer = modal.querySelector('.ant-modal-footer')
+  const body = modal.querySelector('.ant-modal-content')
+
+  const { marginBottom } = getElementTotalSize(modal)
   const isSmall = window.isSmallScreen
-  let maxHeight = window.innerHeight - marginTop - 16
+  const topOffset = modal.getBoundingClientRect().top
+  const bottomGap = isSmall ? 0 : marginBottom + 50
+
+  let maxHeight = window.innerHeight - topOffset - bottomGap
+
   if (header) {
-    // 去除header高度
     maxHeight -= header.offsetHeight
   }
   if (footer) {
     maxHeight -= footer.offsetHeight
   }
-  if (!isSmall) {
-    maxHeight -= marginBottom
+  if (body) {
+    const { paddingTop, paddingBottom } = getElementTotalSize(body)
+    maxHeight -= paddingTop + paddingBottom
   }
-  console.log({ maxHeight })
-  return maxHeight
+  return Math.max(maxHeight, 0)
 }

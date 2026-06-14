@@ -32,7 +32,7 @@ export function useTableActions(
         send(finalSearchData.value)
       }
     } else {
-      modal.notifyWarning('未获取到有效Id')
+      modal.msgWarning('未获取到有效Id')
     }
     isLoading.value = false
   }
@@ -48,7 +48,7 @@ export function useTableActions(
         emit('editBtnClick', res.data, res)
       }
     } else {
-      modal.notifyWarning('未获取到有效Id')
+      modal.msgWarning('未获取到有效Id')
     }
 
     isLoading.value = false

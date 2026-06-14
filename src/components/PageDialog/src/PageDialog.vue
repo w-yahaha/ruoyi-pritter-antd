@@ -2,7 +2,11 @@
 import BaseForm from '@/BaseComponent/BaseForm'
 import businessStore from '@/store/business/businessStore'
 import to from '@/utils/to'
-import { getElementTotalSize, getDialogMaxHeight } from '@/utils/utils'
+import {
+  getElementTotalSize,
+  getDialogMaxHeight,
+  antiShake,
+} from '@/utils/utils'
 
 const props = defineProps({
   infoInit: {
@@ -167,10 +171,6 @@ const getFooterPaddingRight = () => {
     baseFromPaddingRight + formItemPaddingRight + dialogBodyPaddingRight + 'px'
 }
 
-const dialogClosed = () => {
-  emit('closed')
-}
-
 const setFormData = (key, value) => {
   formData.value[key] = value
 }
@@ -186,11 +186,19 @@ const getMaxHeight = () => {
   }
 }
 
+const getMaxHeightAntiShake = antiShake(getMaxHeight, 100)
+
 const handleOpened = () => {
   nextTick(() => {
     getMaxHeight()
     getFooterPaddingRight()
   })
+  window.addEventListener('resize', getMaxHeightAntiShake)
+}
+
+const dialogClosed = () => {
+  emit('closed')
+  window.removeEventListener('resize', getMaxHeightAntiShake)
 }
 
 const modalWrapClass = computed(() => {

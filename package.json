@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
+    "@vueup/vue-quill": "^1.5.3",
     "@vueuse/core": "^14.3.0",
     "ant-design-vue": "~4.2.6",
     "axios": "0.27.2",
     "dayjs": "^1.11.10",
+    "echarts": "^5.6.0",
     "fast-glob": "^3.3.3",
     "file-saver": "^2.0.5",
     "js-cookie": "^3.0.8",
@@ -26,7 +28,7 @@
     "prettier": "^3.8.4",
     "screenfull": "^6.0.2",
     "vue": "^3.5.34",
-    "vue-cropper": "^0.6.5",
+    "vue-cropper": "^1.1.4",
     "vue-draggable-plus": "^0.6.1",
     "vue-router": "^5.1.0"
   },

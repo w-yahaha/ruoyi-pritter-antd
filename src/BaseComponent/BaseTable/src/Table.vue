@@ -187,6 +187,32 @@ const tableColumns = computed(() => {
 
 const rowKey = computed(() => props.tableConfig.rowKey || 'id')
 
+const hasTreeData = computed(() =>
+  props.dataList.some(
+    (row) => Array.isArray(row.children) && row.children.length
+  )
+)
+
+const syncTreeExpandedKeys = () => {
+  if (!hasTreeData.value) {
+    return
+  }
+  expandedRowKeys.value = expandAll
+    ? collectExpandableKeys(props.dataList, rowKey.value)
+    : []
+}
+
+watch(
+  () => props.dataList,
+  () => {
+    if (hasTreeData.value && props.tableConfig.defaultExpandAllRows) {
+      expandAll = true
+      syncTreeExpandedKeys()
+    }
+  },
+  { immediate: true, deep: true }
+)
+
 const mergedTableConfig = computed(() => {
   const { rowClassName, expandable, scroll, ...rest } = props.tableConfig
 
@@ -203,6 +229,11 @@ const mergedTableConfig = computed(() => {
         expandedRowKeys.value = keys
         expandable?.onExpandedRowsChange?.(keys)
       },
+    }
+  } else if (hasTreeData.value) {
+    config.expandedRowKeys = expandedRowKeys.value
+    config.onExpandedRowsChange = (keys) => {
+      expandedRowKeys.value = keys
     }
   }
 
@@ -325,6 +356,10 @@ const unFoldAll = (...arg) => {
     expandAll = arg[0]
   } else {
     expandAll = !expandAll
+  }
+  if (hasTreeData.value) {
+    syncTreeExpandedKeys()
+    return
   }
   expandedRowKeys.value = expandAll
     ? collectExpandableKeys(props.dataList, rowKey.value)

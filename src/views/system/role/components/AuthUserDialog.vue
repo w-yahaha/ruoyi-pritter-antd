@@ -64,7 +64,7 @@ const commitClick = async () => {
     authUserSelectAll({ roleId, userIds: uIds.toString() })
   )
   if (res?.code === 200) {
-    proxy.$modal.notifySuccess(res.msg)
+    proxy.$modal.msgSuccess(res.msg)
     open.value = false
     emits('saveSuccess', res)
   }

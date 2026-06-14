@@ -92,6 +92,10 @@ watch(visible, (open) => {
   if (!open) {
     activeIndex.value = 0
     searchValue.value = ''
+  } else {
+    nextTick(() => {
+      inputRef.value?.focus()
+    })
   }
 })
 
@@ -148,12 +152,6 @@ function openSearch() {
   visible.value = true
 }
 
-function onAfterOpenChange(open) {
-  if (open) {
-    nextTick(() => inputRef.value?.focus())
-  }
-}
-
 function onGlobalKeydown(e) {
   if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === '/')) {
     e.preventDefault()
@@ -189,7 +187,6 @@ onUnmounted(() => {
       centered
       :width="getDialogWidth(600)"
       wrap-class-name="global-search-modal"
-      @after-open-change="onAfterOpenChange"
     >
       <div class="global-search-header">
         <a-input
@@ -198,6 +195,7 @@ onUnmounted(() => {
           class="global-search-input"
           placeholder="菜单搜索 (Ctrl+K / ⌘K)"
           allow-clear
+          name="global-search-input"
           @keydown="keyEvent"
         >
           <template #prefix>

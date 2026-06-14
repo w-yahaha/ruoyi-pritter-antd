@@ -77,7 +77,7 @@ const handleAuthUser = (row) => {
     .then(() => authUserCancel({ userId: row.userId, roleId }))
     .then(() => {
       search()
-      proxy.$modal.notifySuccess('取消授权成功')
+      proxy.$modal.msgSuccess('取消授权成功')
     })
     .catch(() => {})
 }

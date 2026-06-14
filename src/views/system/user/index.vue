@@ -125,7 +125,7 @@ const handleStatusChange = async (row) => {
   let text = row.status === '0' ? '启用' : '停用'
   const [res] = await to(changeUserStatus(row.userId, row.status))
   if (res) {
-    proxy.$modal.notifySuccess(text + '成功')
+    proxy.$modal.msgSuccess(text + '成功')
   } else {
     row.status = row.status === '0' ? '1' : '0'
   }
@@ -144,7 +144,7 @@ const handleResetPwd = (row) => {
     })
     .then(({ value }) => {
       resetUserPwd(row.userId, value).then((response) => {
-        proxy.$modal.notifySuccess('修改成功，新密码是：' + value)
+        proxy.$modal.msgSuccess('修改成功，新密码是：' + value)
       })
     })
     .catch(() => {})

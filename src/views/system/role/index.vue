@@ -173,7 +173,7 @@ const handleStatusChange = async (row) => {
   const text = row.status === '0' ? '启用' : '停用'
   const [res] = await to(changeRoleStatus(row.roleId, row.status))
   if (res) {
-    proxy.$modal.notifySuccess(`${text}成功`)
+    proxy.$modal.msgSuccess(`${text}成功`)
   } else {
     row.status = row.status === '0' ? '1' : '0'
   }

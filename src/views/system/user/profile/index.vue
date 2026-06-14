@@ -1,66 +1,86 @@
-<script setup>
+<script setup name="Profile">
 import userAvatar from './userAvatar.vue'
 import userInfo from './userInfo.vue'
 import resetPwd from './resetPwd.vue'
-
-defineOptions({ name: 'Profile' })
+import { getUserProfile } from '@/api/system/user'
 
 const activeTab = ref('userinfo')
 const state = reactive({
   user: {},
-  roleGroup: '',
-  postGroup: '',
+  roleGroup: {},
+  postGroup: {},
 })
 
 function getUser() {
-  // 用户信息接口待接入
-  state.user = {
-    userName: 'admin',
-    phonenumber: '15888888888',
-    email: 'admin@ruoyi.vip',
-    createTime: '2024-01-01 00:00:00',
-    dept: { deptName: '研发部门' },
-  }
-  state.roleGroup = '超级管理员'
-  state.postGroup = '董事长'
+  getUserProfile().then((response) => {
+    state.user = response.data
+    state.roleGroup = response.roleGroup
+    state.postGroup = response.postGroup
+  })
 }
 
 getUser()
 </script>
 
 <template>
-  <div class="profile-page">
+  <div class="default-main page">
     <a-row :gutter="16">
-      <a-col :xs="24" :sm="24" :md="8" :lg="6">
+      <a-col :xl="6" :lg="7" :md="8" :sm="12" :xs="24">
         <a-card title="个人信息">
-          <div class="profile-avatar-wrap">
-            <userAvatar :user="state.user" />
+          <div class="pl10 pr10">
+            <div class="text-center">
+              <userAvatar :user="state.user" />
+            </div>
+            <ul class="list-group list-group-striped">
+              <li class="list-group-item">
+                <div>
+                  <SvgIcon iconClass="user" />
+                  <span class="ml3">用户名称</span>
+                </div>
+                <div>{{ state.user.userName }}</div>
+              </li>
+              <li class="list-group-item">
+                <div>
+                  <SvgIcon iconClass="phone" />
+                  <span class="ml3">手机号码</span>
+                </div>
+                <div>{{ state.user.phonenumber }}</div>
+              </li>
+              <li class="list-group-item">
+                <div>
+                  <SvgIcon iconClass="email" />
+                  <span class="ml3">用户邮箱</span>
+                </div>
+                <div>{{ state.user.email }}</div>
+              </li>
+              <li class="list-group-item">
+                <div>
+                  <SvgIcon iconClass="tree" />
+                  <span class="ml3">所属部门</span>
+                </div>
+                <div v-if="state.user.dept">
+                  {{ state.user.dept.deptName }} / {{ state.postGroup }}
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div>
+                  <SvgIcon iconClass="peoples" />
+                  <span class="ml3">所属角色</span>
+                </div>
+                <div>{{ state.roleGroup }}</div>
+              </li>
+              <li class="list-group-item">
+                <div>
+                  <SvgIcon iconClass="date" />
+                  <span class="ml3">创建日期</span>
+                </div>
+                <div>{{ state.user.createTime }}</div>
+              </li>
+            </ul>
           </div>
-          <a-descriptions :column="1" size="small">
-            <a-descriptions-item label="用户名称">
-              {{ state.user.userName }}
-            </a-descriptions-item>
-            <a-descriptions-item label="手机号码">
-              {{ state.user.phonenumber }}
-            </a-descriptions-item>
-            <a-descriptions-item label="用户邮箱">
-              {{ state.user.email }}
-            </a-descriptions-item>
-            <a-descriptions-item label="所属部门">
-              <template v-if="state.user.dept">
-                {{ state.user.dept.deptName }} / {{ state.postGroup }}
-              </template>
-            </a-descriptions-item>
-            <a-descriptions-item label="所属角色">
-              {{ state.roleGroup }}
-            </a-descriptions-item>
-            <a-descriptions-item label="创建日期">
-              {{ state.user.createTime }}
-            </a-descriptions-item>
-          </a-descriptions>
         </a-card>
       </a-col>
-      <a-col :xs="24" :sm="24" :md="16" :lg="18">
+      <a-col :xl="18" :lg="17" :md="16" :sm="12" :xs="24">
         <a-card title="基本资料">
           <a-tabs v-model:activeKey="activeTab">
             <a-tab-pane key="userinfo" tab="基本资料">
@@ -76,10 +96,32 @@ getUser()
   </div>
 </template>
 
-<style scoped lang="scss">
-.profile-page {
-  .profile-avatar-wrap {
-    margin-bottom: 16px;
-  }
+<style lang="scss" scoped>
+.text-center {
+  text-align: center;
+}
+
+.list-group-striped > .list-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-group {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-group-item {
+  padding: 11px 0;
+  font-size: 14px;
+}
+
+.list-group-striped > .list-group-item {
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 </style>
