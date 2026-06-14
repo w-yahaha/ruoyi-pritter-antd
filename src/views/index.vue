@@ -1,7 +1,11 @@
 <script setup>
+import { useMediaQuery } from '@vueuse/core'
+
 defineOptions({ name: 'Index' })
 
 const appTitle = import.meta.env.VITE_APP_TITLE || '若依管理系统'
+const isMobile = useMediaQuery('(max-width: 767px)')
+const descriptionsColumn = computed(() => (isMobile.value ? 1 : 2))
 
 const techStacks = [
   { name: 'Vue 3', url: 'https://cn.vuejs.org/' },
@@ -24,8 +28,8 @@ const dependencies = [
   <div class="home">
     <a-card title="关于" class="home-card">
       <p>
-        欢迎使用 {{ appTitle }}。本项目基于若依前后端分离版本，使用 Ant Design Vue
-        重构前端界面。
+        欢迎使用 {{ appTitle }}。本项目基于若依前后端分离版本，使用 Ant Design
+        Vue 重构前端界面。
       </p>
     </a-card>
 
@@ -44,7 +48,12 @@ const dependencies = [
     </a-card>
 
     <a-card title="npm 依赖" class="home-card">
-      <a-descriptions bordered :column="2" size="small">
+      <a-descriptions
+        bordered
+        :column="descriptionsColumn"
+        size="small"
+        class="home-descriptions"
+      >
         <a-descriptions-item
           v-for="item in dependencies"
           :key="item.name"
@@ -59,8 +68,54 @@ const dependencies = [
 
 <style scoped lang="scss">
 .home {
+  min-width: 0;
+
   .home-card {
     margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+
+  :deep(.ant-card-head) {
+    @media (max-width: 767px) {
+      min-height: 40px;
+      padding: 0 12px;
+    }
+  }
+
+  :deep(.ant-card-body) {
+    @media (max-width: 767px) {
+      padding: 12px;
+    }
+  }
+
+  .home-descriptions {
+    :deep(.ant-descriptions-item-label),
+    :deep(.ant-descriptions-item-content) {
+      word-break: break-word;
+    }
+
+    :deep(.ant-descriptions-item-content .ant-tag) {
+      @media (max-width: 767px) {
+        white-space: normal;
+        height: auto;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .home-card {
+      margin-bottom: 12px;
+    }
   }
 }
 </style>
