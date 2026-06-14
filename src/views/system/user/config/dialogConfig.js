@@ -125,11 +125,13 @@ export default () => {
         type: 'select',
         label: '岗位',
         options: ref([]),
-        setValue: 'postId',
-        setLabel: 'postName',
         config: {
           allowClear: false,
           mode: 'multiple',
+          fieldNames: {
+            value: 'postId',
+            label: 'postName',
+          },
         },
         layout: {
           xl: 24,
@@ -144,11 +146,13 @@ export default () => {
         type: 'select',
         label: '角色',
         options: ref([]),
-        setValue: 'roleId',
-        setLabel: 'roleName',
         config: {
           allowClear: false,
           mode: 'multiple',
+          fieldNames: {
+            value: 'roleId',
+            label: 'roleName',
+          },
         },
         layout: {
           xl: 24,

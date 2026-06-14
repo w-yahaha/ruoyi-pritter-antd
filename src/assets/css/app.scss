@@ -87,7 +87,7 @@ body,
   .ant-modal-content {
     display: flex;
     flex-direction: column;
-    height: calc(100vh);
+    height: 100%;
   }
   .ant-modal-body {
     flex: 1;
@@ -95,4 +95,10 @@ body,
 }
 .right-border {
   border-right: 1px solid var(--ba-border-color);
+}
+
+@media (max-width: 575px) {
+  .ant-form-item .ant-form-item-label {
+    padding: 0;
+  }
 }

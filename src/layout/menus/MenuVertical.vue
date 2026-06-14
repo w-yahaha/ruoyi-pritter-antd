@@ -91,7 +91,12 @@ function syncOpenKeysFromRoute() {
     return
   }
   skipOpenChange.value = true
-  openKeys.value = getOpenKeys()
+  const routeKeys = getOpenKeys()
+  if (config.layout.menuUniqueOpened) {
+    openKeys.value = routeKeys
+  } else {
+    openKeys.value = [...new Set([...openKeys.value, ...routeKeys])]
+  }
   nextTick(() => {
     skipOpenChange.value = false
   })
@@ -105,7 +110,7 @@ watch(
   { immediate: true }
 )
 
-watch(sidebarRouters, () => syncOpenKeysFromRoute(), { deep: true })
+watch(sidebarRouters, () => syncOpenKeysFromRoute())
 
 watch(
   () => config.layout.menuCollapse,
@@ -134,7 +139,12 @@ function onOpenChange(keys) {
   const latestOpenKey = keys.find((key) => !openKeys.value.includes(key))
 
   if (latestOpenKey && rootSubmenuKeys.value.includes(latestOpenKey)) {
-    openKeys.value = [latestOpenKey]
+    openKeys.value = keys.filter((key) => {
+      if (rootSubmenuKeys.value.includes(key)) {
+        return key === latestOpenKey
+      }
+      return key.startsWith(`${latestOpenKey}/`)
+    })
     return
   }
 
@@ -153,7 +163,7 @@ function onOpenChange(keys) {
       theme="light"
       :selected-keys="[activeMenu]"
       :open-keys="openKeys"
-      @update:open-keys="onOpenChange"
+      @openChange="onOpenChange"
     >
       <MenuTree
         v-for="(menuRoute, index) in sidebarRouters"

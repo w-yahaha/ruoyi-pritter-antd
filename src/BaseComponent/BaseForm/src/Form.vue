@@ -132,7 +132,6 @@ import {
   Switch as SWITCH,
   InputTag as INPUTTAG,
   Autocomplete as AUTOCOMPLETE,
-  SelectV2 as SELECTV2,
 } from './cpn/index'
 import { capitalizeFirstLetter } from './utils/index.js'
 
@@ -152,7 +151,7 @@ defineOptions({
     SWITCH,
     INPUTTAG,
     AUTOCOMPLETE,
-    SELECTV2,
+    SELECTV2: SELECT,
   },
 })
 

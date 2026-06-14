@@ -1,10 +1,7 @@
 <script setup>
 import { useEventListener } from '@vueuse/core'
 import { ReloadOutlined } from '@ant-design/icons-vue'
-import {
-  getElementPlusIconfontNames,
-  getLocalIconfontNames,
-} from '@/utils/iconfont'
+import { getAntdIconfontNames, getLocalIconfontNames } from '@/utils/iconfont'
 
 const props = defineProps({
   size: {
@@ -40,9 +37,8 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'change'])
 
 const selectorInputRef = useTemplateRef('selectorInputRef')
+const iconSelectorRef = useTemplateRef('iconSelectorRef')
 const popoverOpen = ref(false)
-const inputFocus = ref(false)
-const iconSelectorMouseover = ref(false)
 const iconType = ref(props.type)
 const selectorWidth = ref(260)
 const fontIconNames = ref([])
@@ -54,25 +50,34 @@ const iconKey = ref(0)
 const renderFontIconNames = computed(() => {
   if (!inputValue.value) return fontIconNames.value
   const keyword = inputValue.value.trim().toLowerCase()
-  return fontIconNames.value.filter((icon) => icon.toLowerCase().includes(keyword))
+  return fontIconNames.value.filter((icon) =>
+    icon.toLowerCase().includes(keyword)
+  )
 })
 
-const syncPopover = () => {
-  popoverOpen.value = inputFocus.value || iconSelectorMouseover.value
+const closePopover = () => {
+  popoverOpen.value = false
 }
 
 const onInputFocus = () => {
-  inputFocus.value = true
-  syncPopover()
+  if (props.disabled) return
+  popoverOpen.value = true
 }
 
-const onInputBlur = () => {
-  inputFocus.value = false
-  setTimeout(() => {
-    if (!iconSelectorMouseover.value) {
-      popoverOpen.value = false
-    }
-  }, 150)
+const onPopoverOpenChange = (open) => {
+  if (open) {
+    popoverOpen.value = true
+  }
+}
+
+const onClickOutside = (event) => {
+  if (!popoverOpen.value) return
+
+  const rootEl = iconSelectorRef.value
+  if (rootEl?.contains(event.target)) return
+  if (event.target.closest('.ant-popover')) return
+
+  closePopover()
 }
 
 const onInputRefresh = () => {
@@ -86,8 +91,8 @@ const onInputRefresh = () => {
 const loadIcons = (name) => {
   iconType.value = name
   fontIconNames.value = []
-  if (name === 'ele') {
-    getElementPlusIconfontNames().then((res) => {
+  if (name === 'antd') {
+    getAntdIconfontNames().then((res) => {
       fontIconNames.value = res
     })
   } else if (name === 'local') {
@@ -102,8 +107,7 @@ const onChangeTab = (name) => {
 }
 
 const onIcon = (icon) => {
-  iconSelectorMouseover.value = false
-  popoverOpen.value = false
+  closePopover()
   iconKey.value++
   prependIcon.value = icon
   inputValue.value = ''
@@ -138,81 +142,81 @@ watch(
 onMounted(() => {
   getInputWidth()
   useEventListener(window, 'resize', getInputWidth)
-  useEventListener(document, 'click', () => {
-    if (!inputFocus.value && !iconSelectorMouseover.value) {
-      popoverOpen.value = false
-    }
-  })
+  useEventListener(document, 'mousedown', onClickOutside)
   loadIcons(props.type)
 })
 </script>
 
 <template>
-  <a-popover
-    v-model:open="popoverOpen"
-    trigger="focus"
-    :placement="placement"
-    :overlay-style="{ width: `${selectorWidth}px` }"
-  >
-    <template #content>
-      <div
-        class="icon-selector-panel"
-        @mouseenter="iconSelectorMouseover = true"
-        @mouseleave="iconSelectorMouseover = false"
-      >
-        <div class="selector-header">
-          <div class="selector-title">{{ title || '请选择图标' }}</div>
-          <div class="selector-tab">
-            <span :class="{ active: iconType === 'ele' }" @click="onChangeTab('ele')">
-              ele
-            </span>
-            <span :class="{ active: iconType === 'local' }" @click="onChangeTab('local')">
-              local
-            </span>
-          </div>
-        </div>
-        <div class="selector-body">
-          <div v-if="renderFontIconNames.length > 0" class="icon-list">
-            <div
-              v-for="item in renderFontIconNames"
-              :key="item"
-              class="icon-selector-item"
-              :title="item"
-              @click="onIcon(item)"
-            >
-              <SvgIcon :key="'icon' + iconKey + item" :icon-class="item" />
+  <div ref="iconSelectorRef" class="icon-selector">
+    <a-popover
+      :open="popoverOpen"
+      :trigger="[]"
+      :placement="placement"
+      :overlay-style="{ width: `${selectorWidth}px` }"
+      @update:open="onPopoverOpenChange"
+    >
+      <template #content>
+        <div class="icon-selector-panel">
+          <div class="selector-header">
+            <div class="selector-title">{{ title || '请选择图标' }}</div>
+            <div class="selector-tab">
+              <span
+                :class="{ active: iconType === 'antd' }"
+                @click="onChangeTab('antd')"
+              >
+                antd
+              </span>
+              <span
+                :class="{ active: iconType === 'local' }"
+                @click="onChangeTab('local')"
+              >
+                local
+              </span>
             </div>
           </div>
-          <a-empty v-else description="暂无图标" />
-        </div>
-      </div>
-    </template>
-
-    <a-input
-      ref="selectorInputRef"
-      v-model:value="inputValue"
-      :size="size"
-      :disabled="disabled"
-      placeholder="搜索图标"
-      @focus="onInputFocus"
-      @blur="onInputBlur"
-    >
-      <template #addonBefore>
-        <div class="icon-prepend">
-          <SvgIcon
-            :key="'icon' + iconKey"
-            :icon-class="prependIcon || defaultModelValue"
-          />
-          <div v-if="showIconName" class="name">
-            {{ prependIcon || defaultModelValue }}
+          <div class="selector-body">
+            <div v-if="renderFontIconNames.length > 0" class="icon-list">
+              <div
+                v-for="item in renderFontIconNames"
+                :key="item"
+                class="icon-selector-item"
+                :title="item"
+                @click="onIcon(item)"
+              >
+                <SvgIcon :key="'icon' + iconKey + item" :icon-class="item" />
+              </div>
+            </div>
+            <a-empty v-else description="暂无图标" />
           </div>
         </div>
       </template>
-      <template #addonAfter>
-        <ReloadOutlined class="refresh-icon" @click.stop="onInputRefresh" />
-      </template>
-    </a-input>
-  </a-popover>
+
+      <a-input
+        ref="selectorInputRef"
+        v-model:value="inputValue"
+        :size="size"
+        :disabled="disabled"
+        placeholder="搜索图标"
+        @focus="onInputFocus"
+      >
+        <template #addonBefore>
+          <div class="icon-prepend">
+            <SvgIcon
+              :key="'icon' + iconKey"
+              :icon-class="prependIcon || defaultModelValue"
+            />
+            <div v-if="showIconName" class="name">
+              {{ prependIcon || defaultModelValue }}
+            </div>
+          </div>
+        </template>
+        <template #addonAfter>
+          <ReloadOutlined class="refresh-icon" @click.stop="onInputRefresh" />
+        </template>
+      </a-input>
+    </a-popover>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -274,7 +278,7 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 8px;
   margin: 3px;
   border: 1px solid var(--ba-border-color);
   border-radius: 6px;

@@ -19,7 +19,6 @@ import { useRoute, useRouter } from 'vue-router'
 const configStore = useConfig()
 const isDark = computed(() => configStore.layout.isDark)
 
-const formRef = ref()
 const form = reactive({
   username: 'admin',
   password: 'admin123',
@@ -81,10 +80,6 @@ const loginLoading = ref(false)
 
 function refreshCaptchaIfIdle() {
   if (!captchaLoading.value) fetchCaptcha()
-}
-
-function submitForm() {
-  formRef.value?.submit()
 }
 
 async function submitLogin() {
@@ -191,7 +186,6 @@ async function submitLogin() {
         </div>
 
         <a-form
-          ref="formRef"
           :model="form"
           :rules="rules"
           layout="vertical"
@@ -248,7 +242,6 @@ async function submitLogin() {
                 :maxlength="4"
                 autocomplete="off"
                 :spellcheck="false"
-                @press-enter="submitForm"
               />
               <a-spin
                 :spinning="captchaLoading"

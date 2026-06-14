@@ -6,10 +6,12 @@ export default () => {
         field: 'dictType',
         type: 'select',
         options: ref([]),
-        setLabel: 'dictName',
-        setValue: 'dictType',
         config: {
           allowClear: false,
+          fieldNames: {
+            value: 'dictType',
+            label: 'dictName',
+          },
         },
       },
       {

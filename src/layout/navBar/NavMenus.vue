@@ -48,21 +48,21 @@ const onProfile = () => {
 <template>
   <div class="nav-menus">
     <a-tooltip title="主题切换">
-      <button type="button" class="nav-menu-item" @click="toggleDarkLight">
+      <div class="nav-menu-item" @click="toggleDarkLight">
         <SvgIcon
           :iconClass="configStore.layout.isDark ? 'light' : 'dark'"
           :size="16"
         />
-      </button>
+      </div>
     </a-tooltip>
 
     <a-tooltip :title="isFullScreen ? '退出全屏' : '全屏'">
-      <button type="button" class="nav-menu-item" @click="onFullScreen">
+      <div class="nav-menu-item" @click="onFullScreen">
         <SvgIcon
           :icon-class="isFullScreen ? 'fullScreenCancel' : 'fullscreen'"
           :size="16"
         />
-      </button>
+      </div>
     </a-tooltip>
 
     <a-dropdown placement="bottomRight" :trigger="['click']">
@@ -84,14 +84,13 @@ const onProfile = () => {
     </a-dropdown>
 
     <a-tooltip title="布局配置">
-      <button
-        type="button"
+      <div
         class="nav-menu-item"
         :class="{ active: showRightPanel }"
         @click="showRightPanel = !showRightPanel"
       >
         <SvgIcon icon-class="cogs" :size="16" />
-      </button>
+      </div>
     </a-tooltip>
   </div>
 </template>

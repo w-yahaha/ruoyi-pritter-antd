@@ -1,8 +1,7 @@
 <script>
-import { createVNode, resolveComponent, defineComponent, computed } from 'vue'
+import { createVNode, defineComponent, computed } from 'vue'
+import { resolveAntdIcon } from '@/utils/iconfont'
 import svg from './useSvg.vue'
-
-const ANT_ICON_PREFIX = 'ant-icon-'
 
 export default defineComponent({
   name: 'SvgIcon',
@@ -31,9 +30,9 @@ export default defineComponent({
     }))
 
     return () => {
-      if (props.iconClass.startsWith(ANT_ICON_PREFIX)) {
-        const iconName = props.iconClass.slice(ANT_ICON_PREFIX.length)
-        return createVNode(resolveComponent(iconName), {
+      const antIcon = resolveAntdIcon(props.iconClass)
+      if (antIcon) {
+        return createVNode(antIcon, {
           key: props.iconClass,
           class: ['ant-icon', props.className].filter(Boolean).join(' '),
           style: iconStyle.value,

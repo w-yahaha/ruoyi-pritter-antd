@@ -63,6 +63,7 @@ const restoreDefault = () => {
         class="layout-config-form"
         layout="horizontal"
         :colon="false"
+        :wrapper-col="{ flex: '1' }"
         :model="configStore.layout"
       >
         <div class="layout-mode-styles-box">
@@ -214,44 +215,11 @@ const restoreDefault = () => {
   }
 
   :deep(.ant-form-item-row) {
-    flex-wrap: nowrap;
     align-items: center;
-    gap: 8px;
-  }
-
-  :deep(.ant-form-item-label) {
-    flex: 0 0 auto !important;
-    width: auto !important;
-    max-width: none !important;
-    overflow: visible;
-    text-align: left;
-    padding-inline-end: 0 !important;
-
-    > label {
-      width: max-content;
-      max-width: 100%;
-      white-space: normal;
-      line-height: 1.35;
-      height: auto;
-      align-items: flex-start;
-      justify-content: flex-start;
-
-      &::after {
-        display: none;
-      }
-    }
   }
 
   :deep(.ant-form-item-control) {
-    flex: 0 0 auto !important;
-    width: auto !important;
-    max-width: none !important;
     min-width: 0;
-  }
-
-  :deep(.ant-form-item-control-input-content) {
-    display: flex;
-    align-items: center;
   }
 }
 

@@ -11,7 +11,6 @@ import CheckBox from './src/CheckBox/CheckBox.vue'
 import Radio from './src/Radio/Radio.vue'
 import InputTag from './src/InputTag/InputTag.vue'
 import Autocomplete from './src/Autocomplete/Autocomplete.vue'
-import SelectV2 from './src/SelectV2/selectV2.vue'
 import Switch from './src/Switch/Switch.vue'
 
 export {
@@ -28,6 +27,5 @@ export {
   Radio,
   InputTag,
   Autocomplete,
-  SelectV2,
   Switch,
 }

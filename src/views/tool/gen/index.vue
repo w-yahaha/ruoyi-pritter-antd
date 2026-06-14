@@ -6,6 +6,7 @@ import getContentConfig from './config/contentConfig.js'
 import getComputedConfig from '@/hooks/getPageConfig'
 import { tool } from '@/api/config/base.js'
 import to from '@/utils/to'
+import { antiShake, getDialogMaxHeight } from '@/utils/utils'
 import { gen } from '@/views/pageName.js'
 
 const router = useRouter()
@@ -125,6 +126,28 @@ const openImportTable = () => {
 const copyTextSuccess = () => {
   proxy.$modal.msgSuccess('复制成功')
 }
+
+const previewMaxHeight = ref(520)
+
+const getPreviewMaxHeight = () => {
+  previewMaxHeight.value = getDialogMaxHeight('.preview-dialog')
+}
+
+const getPreviewMaxHeightAntiShake = antiShake(getPreviewMaxHeight, 100)
+
+watch(
+  () => preview.value.open,
+  (open) => {
+    if (open) {
+      nextTick(() => {
+        getPreviewMaxHeight()
+      })
+      window.addEventListener('resize', getPreviewMaxHeightAntiShake)
+    } else {
+      window.removeEventListener('resize', getPreviewMaxHeightAntiShake)
+    }
+  }
+)
 </script>
 
 <template>
@@ -239,28 +262,34 @@ const copyTextSuccess = () => {
 
     <a-modal
       v-model:open="preview.open"
+      class="preview-dialog"
       :title="preview.title"
       :width="getWidth('80%')"
       :style="{ top: '25px' }"
       destroy-on-close
       :footer="null"
     >
-      <div class="preview-body">
-        <a-tabs v-model:activeKey="preview.activeName">
+      <div
+        class="preview-body"
+        :style="{ height: `${previewMaxHeight}px` }"
+      >
+        <a-tabs v-model:activeKey="preview.activeName" class="preview-tabs">
           <a-tab-pane
             v-for="tab in previewTabs"
             :key="tab.key"
             :tab="tab.label"
           >
-            <a-button
-              v-copyText="tab.value"
-              v-copyText:callback="copyTextSuccess"
-              type="link"
-              class="copy-btn"
-            >
-              复制
-            </a-button>
-            <pre class="preview-code">{{ tab.value }}</pre>
+            <div class="preview-pane-inner">
+              <a-button
+                v-copyText="tab.value"
+                v-copyText:callback="copyTextSuccess"
+                type="link"
+                class="copy-btn"
+              >
+                复制
+              </a-button>
+              <pre class="preview-code">{{ tab.value }}</pre>
+            </div>
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -280,22 +309,56 @@ const copyTextSuccess = () => {
 }
 
 .preview-body {
-  max-height: 590px;
-  overflow-y: auto;
+  overflow: hidden;
+}
+
+.preview-tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  :deep(.ant-tabs-nav) {
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  :deep(.ant-tabs-content-holder) {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  :deep(.ant-tabs-content),
+  :deep(.ant-tabs-tabpane) {
+    height: 100%;
+  }
+
+  :deep(.ant-tabs-tabpane) {
+    overflow: hidden;
+  }
+}
+
+.preview-pane-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .copy-btn {
-  float: right;
+  flex-shrink: 0;
+  align-self: flex-end;
   margin-bottom: 8px;
 }
 
 .preview-code {
-  clear: both;
+  flex: 1;
+  min-height: 0;
   margin: 0;
   padding: 12px;
   background: var(--ba-bg-color);
   border-radius: 4px;
-  overflow-x: auto;
+  overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
 }

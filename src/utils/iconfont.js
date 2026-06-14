@@ -107,21 +107,39 @@ export function getLocalIconfontNames() {
   })
 }
 
+const ANT_ICON_PREFIX = 'ant-icon-'
+const ANT_ICON_KEY_RE = /(?:Outlined|Filled|TwoTone)$/
+
+export function isAntdIconKey(key, component = aIcons[key]) {
+  return (
+    ANT_ICON_KEY_RE.test(key) &&
+    typeof component === 'function' &&
+    component.displayName === key
+  )
+}
+
+export function resolveAntdIcon(iconClass) {
+  if (!iconClass?.startsWith(ANT_ICON_PREFIX)) return null
+  const key = iconClass.slice(ANT_ICON_PREFIX.length)
+  return isAntdIconKey(key) ? aIcons[key] : null
+}
+
 /*
- * 获取element plus 自带的图标
+ * 获取 Ant Design Vue 自带的图标
  */
-export function getElementPlusIconfontNames() {
+export function getAntdIconfontNames() {
   return new Promise((resolve, reject) => {
     nextTick(() => {
       const iconfonts = []
-      const icons = aIcons
-      for (const i in icons) {
-        iconfonts.push(`el-icon-${icons[i].name}`)
+      for (const key in aIcons) {
+        if (isAntdIconKey(key)) {
+          iconfonts.push(`${ANT_ICON_PREFIX}${key}`)
+        }
       }
       if (iconfonts.length > 0) {
         resolve(iconfonts)
       } else {
-        reject('No ElementPlus Icons')
+        reject('No Ant Design Icons')
       }
     })
   })

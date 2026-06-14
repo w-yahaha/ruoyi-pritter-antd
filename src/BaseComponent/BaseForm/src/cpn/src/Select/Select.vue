@@ -1,5 +1,5 @@
 <script setup>
-import { capitalizeFirstLetter, getOptions } from '../../../utils/index.js'
+import { getOptions } from '../../../utils/index.js'
 
 const props = defineProps({
   item: { type: Object, required: true },
@@ -8,9 +8,15 @@ const props = defineProps({
 const value = defineModel('value')
 const selectRef = useTemplateRef('selectRef')
 
+const placeholder = computed(() => {
+  if (props.allDisabled) return ''
+  if (props.item?.config?.placeholder) return props.item.config.placeholder
+  return '请选择' + props.item.label
+})
+
 const selectConfig = computed(() => ({
   allowClear: true,
-  placeholder: '请选择' + props.item.label,
+  virtual: true,
   ...props.item.config,
 }))
 
@@ -24,24 +30,12 @@ defineExpose({ getRef })
     v-model:value="value"
     class="base-form-select"
     :disabled="allDisabled"
+    :placeholder="placeholder"
+    :options="getOptions(item)"
     v-bind="selectConfig"
     :id="item.field"
     v-on="item.eventFunction || {}"
   >
-    <a-select-option
-      v-for="option in getOptions(item)"
-      :key="option.key ?? option.value"
-      :value="item.setValue ? option[item.setValue] : option.value"
-      v-on="item.optionFunction || {}"
-    >
-      <template v-for="slotName in item.optionSlots" #[slotName]>
-        <slot
-          :name="item.field + capitalizeFirstLetter(slotName) + 'Option'"
-          :slotData="{ ...item, option }"
-        />
-      </template>
-      {{ item.setLabel ? option[item.setLabel] : option.label }}
-    </a-select-option>
     <template v-for="slotName in item.slotNames" #[slotName]="slotData">
       <slot :name="slotName" :slotData="slotData" />
     </template>

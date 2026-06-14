@@ -163,6 +163,7 @@ const includes = (name) => props.headerButtons.includes(name)
   border-bottom: none;
   font-size: 14px;
   padding: 13px 0;
+  overflow-x: auto;
 }
 
 .table-search-button-group {
