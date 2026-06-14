@@ -1,3 +1,37 @@
+# 其他版本
+
+| 版本               | 技术栈                      | 仓库                                                                                         |
+| ------------------ | --------------------------- | -------------------------------------------------------------------------------------------- |
+| ruoyi-vue3-lmw     | Vue 3 + JS + Element Plus   | [gitee.com/codelm/ruoyi-vue3-lmw](https://gitee.com/codelm/ruoyi-vue3-lmw.git)               |
+| ruoyi-vue3-lmw-ts  | Vue 3 + TS + Element Plus   | [gitee.com/codelm/ruoyi-vue3-lmw-ts](https://gitee.com/codelm/ruoyi-vue3-lmw-ts.git)         |
+| ruoyi-pritter-antd | Vue 3 + JS + Ant Design Vue | [github.com/w-yahaha/ruoyi-pritter-antd](https://github.com/w-yahaha/ruoyi-pritter-antd.git) |
+
+# 演示图
+
+<table>
+  <tr>
+    <td width="50%"><img src="readmeImgs/img1.png" width="100%" /></td>
+    <td width="50%"><img src="readmeImgs/img2.png" width="100%" /></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="readmeImgs/img3.png" width="100%" /></td>
+    <td width="50%"><img src="readmeImgs/img4.png" width="100%" /></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="readmeImgs/img5.png" width="100%" /></td>
+    <td width="50%"><img src="readmeImgs/img6.png" width="100%" /></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="readmeImgs/img7.png" width="100%" /></td>
+    <td width="50%"><img src="readmeImgs/img8.png" width="100%" /></td>
+  </tr>
+</table>
+
+# 联系本人
+
+本人微信：di_huhu <img src="./readmeImgs/pic0.png" />，欢迎大家加入群聊提供建议，
+无需捐赠，如果觉得项目不错，或者已经在使用了，希望你可以去帮我点个 ⭐ Star。
+
 # 组件使用说明
 
 本文档介绍项目中六个核心基础组件的用法。其中 `BaseForm`、`BaseTable`、`PageContent`、`PageDialog`、`PageSearch` 已在 `main.js` 中全局注册，可直接在模板中使用；`BaseEchart` 需手动按需引入。
