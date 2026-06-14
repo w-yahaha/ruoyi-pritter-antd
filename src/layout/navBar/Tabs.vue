@@ -21,8 +21,8 @@ const scrollInstance = ref(null)
 const visitedViews = computed(() => tagsViewStore.visitedViews)
 
 const contextmenuItems = reactive([
-  { name: 'refresh', label: '重新加载', icon: 'refresh', disabled: false },
-  { name: 'close', label: '关闭标签', icon: 'times', disabled: false },
+  { name: 'refresh', label: '重新加载', icon: 'sync-alt', disabled: false },
+  { name: 'close', label: '关闭标签', icon: 'close', disabled: false },
   {
     name: 'closeOther',
     label: '关闭其他标签',
