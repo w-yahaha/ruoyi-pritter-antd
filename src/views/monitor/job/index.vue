@@ -343,8 +343,4 @@ const handleJobLog = (row) => {
   justify-content: flex-start;
   gap: 4px;
 }
-
-.ml6 {
-  margin-left: 0;
-}
 </style>

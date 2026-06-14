@@ -332,10 +332,6 @@ defineExpose({
   }
 }
 
-.ml6 {
-  margin-left: 6px;
-}
-
 .flex-center {
   display: flex;
   align-items: center;
